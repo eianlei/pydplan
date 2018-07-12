@@ -8,9 +8,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPainterPath, QLinearGradient, QBrush, QPen, QColor
 from PyQt5.QtWidgets import QWidget
 
-from pydplan.pydplan_buhlmann import ModelPoint
-#from pydplan.pydplan_classes import DivePlan
-#from pydplan.pydplan_profiletools import DiveProfilePoint
+from pydplan_buhlmann import ModelPoint
+
 
 colors = [Qt.black, Qt.gray, Qt.lightGray, Qt.darkGray,
           Qt.red, Qt.darkYellow, Qt.green, Qt.darkGreen,

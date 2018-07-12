@@ -5,14 +5,14 @@
 
 
 # import modules, like PyQt5 stuff
-from pydplan.pydplan_classes import DivePlan, DecoStop
-from pydplan.pydplan_plot import PlotPlanWidget, PlotBelowWidget, PlotPressureGraphWidget, \
+from pydplan_classes import DivePlan, DecoStop
+from pydplan_plot import PlotPlanWidget, PlotBelowWidget, PlotPressureGraphWidget, \
     PlotTissuesWidget
-from pydplan.pydplan_table import *
-from pydplan.pydplan_bars import *
-from pydplan.pydplan_heat import *
-from pydplan.pydplan_profiletools import calculatePlan
-from pydplan.pydplan_classes import PlanMode
+from pydplan_table import *
+from pydplan_bars import *
+from pydplan_heat import *
+from pydplan_profiletools import calculatePlan
+from pydplan_classes import PlanMode
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import  QPalette

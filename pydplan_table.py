@@ -6,7 +6,7 @@
 from PyQt5.QtWidgets import QTableWidgetItem, QTableWidget
 from PyQt5.QtCore import Qt
 #from pydplan.pydplan_classes import DivePlan
-from pydplan.pydplan_profiletools import DiveProfilePoint
+from pydplan_profiletools import DiveProfilePoint
 
 def tableUpdate(tableW: QTableWidget, modelRun: list):
 

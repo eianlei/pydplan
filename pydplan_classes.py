@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt
-from pydplan.pydplan_buhlmann import Buhlmann
+from pydplan_buhlmann import Buhlmann
 
 from enum import Enum, auto
 

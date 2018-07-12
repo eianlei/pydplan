@@ -4,9 +4,9 @@
 # part of PYDPLAN, a Python Dive Planner with PyQt5 GUI
 # module for handling dive profile
 
-from pydplan.pydplan_classes import currentTank, DivePlan, DecoStop
+from pydplan_classes import currentTank, DivePlan, DecoStop
 from copy import deepcopy
-from pydplan.pydplan_buhlmann import depth2absolutePressure, Buhlmann, ModelPoint, Constants
+from pydplan_buhlmann import depth2absolutePressure, Buhlmann, ModelPoint, Constants
 
 
 class gradientFactor():
@@ -39,7 +39,7 @@ class gradientFactor():
             self.gfCurrent = self.GFhigh - (self.gfSlope * depthNow)
             return self.gfCurrent
 
-from pydplan.pydplan_classes import PlanMode, TankType, ScubaTank
+from pydplan_classes import PlanMode, TankType, ScubaTank
 from enum import Enum, auto
 
 class DivePhase(Enum):
