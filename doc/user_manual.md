@@ -10,7 +10,7 @@ PYDPLANner can be used in 3 main modes:
 - ~~**Import** mode, where the user can import a real dive profile from a dive computer or dive logging software and see the resulting Buhlmann model states.~~ *This mode is not yet implemented and is in the backlog of future development.*
 
 # The main window
-![mainwin-shorturl](/doc/pyd_mainscreen.JPG)
+![mainwin-shorturl](pyd_mainscreen.JPG)
 
 The application main window is divided into tabbed control panels on the left hand side, and tabbed viewer panels on the right hand side. On top there is a menu, which is still not doing much, but has planned future use.
 
