@@ -20,22 +20,25 @@ The main window has a minimum size, but by dragging edges or corners it can be r
 
 From menu File/Exit one can close the application. Or by CTRL-Q.
 
-There is a slider widget between left and right side, which allows changin the proportion of side. But each side has a minimum widht and after pulling beyond that the entire panel goes hidden. The hidden panel can be dragged back from pulling the edge.
+There is a slider widget between left and right side, which allows changing the proportion of side. But each side has a minimum widht and after pulling beyond that the entire panel goes hidden. The hidden panel can be dragged back from pulling the edge.
 
 # Control panels (left side)
 By clicking a tab one can navigate to one of the following control panels:
 - **Plan** allows selecting the operating mode and control the dive profile/plan
-- **Tanks** allows selecting and configring tanks and gases used on the dive
+- **Tanks** allows selecting and configuring tanks and gases used on the dive
 - **Model** allows controlling details of the decompression model
 
 ## Plan
 By clicking a tab one can select one of the following operating modes and related controls
 ### **Calculation** mode
+**WARNING: DO NOT USE FOR REAL DIVE PLANS, THIS SOFTWARE IS NOT TESTED AND INCOMPLETE WORK IN PROGRESS **
+
 The user configures bottom depth, bottom time and gases to use, the application then calculates the Buhlmann model throughout the dive and produces a decompression schedule that does not violate Gradient Factor based ceiling.
 
 Above the tabs there are two widgets that allow controlling the:
 - Bottom depth in meters
 - Bottom time in meters
+
 Changing any of these will immediately recalculate and redraw views. Feedback is immediate so one can easily see what changes take place when modifying parameters.
 
 Under the **Calculate** tab there is a printout of calculated deco stops in tabular form. The profile can also be see graphically on the **Profile** view.
