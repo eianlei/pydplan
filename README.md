@@ -18,5 +18,9 @@ Use this application at your own risk, the author provides no guarantees about t
 * In no event should you consider scuba diving with mixed gases without proper training!
 * Ignoring these warnings can cause your **death** or **serious and permanent injuries**!
 
+# INSTALLATION
+[Installation instructions](/doc/installation.md)
 
+# USER MANUAL
+[user manual](/doc/user_manual.md)
 
