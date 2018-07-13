@@ -521,7 +521,7 @@ class pydplan_main(QMainWindow):
 
         row = 0
         controls = {}
-        lay.addWidget(QLabel('Bühlmann model:'), row, 0)
+        lay.addWidget(QLabel('Buhlmann model:'), row, 0)
         key = 'modelSelect'
         controls[key] = QComboBox()
         controls[key].addItems( self.divePlan.modelConstants.model.keys())
