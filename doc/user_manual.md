@@ -176,9 +176,19 @@ Below each bar there are lines that represent:
 
 
 ## Heat
+This panel shows the heat map of tissue compartments, where the color tells is the compartment if on or off gassing and by how much.
+
+The control of the colors is not quite yet what it should be, so this feature needs a little polishing.
+
+- The x-axis of the heat map represents the run time starting from left
+- the y-axis contains each of the tissue compartments
+- shades of blue means the compartment is on-gassing, the darket the blue gets, the more saturated the tissue is
+- shades of green means the compartment is off-gassing within safe limits, the lighter the green, the safer the off-gassing is
+- when the color turns to yellow, the safe limit is approaching, and red means danger, the brighter the red, the more dangerous the situation is
 
 
 ## Plan
 *This panel is not yet implemented and is in the backlog of future development.*
+The intention is to print a dive plan here with all the details.
 
 
