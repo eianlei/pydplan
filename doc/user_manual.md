@@ -31,7 +31,8 @@ By clicking a tab one can navigate to one of the following control panels:
 ## Plan
 By clicking a tab one can select one of the following operating modes and related controls
 ### **Calculation** mode
-**WARNING: DO NOT USE FOR REAL DIVE PLANS, THIS SOFTWARE IS NOT TESTED AND INCOMPLETE WORK IN PROGRESS **
+
+**WARNING**: DO NOT USE FOR REAL DIVE PLANS, THIS SOFTWARE IS NOT TESTED AND INCOMPLETE WORK IN PROGRESS
 
 The user configures bottom depth, bottom time and gases to use, the application then calculates the Buhlmann model throughout the dive and produces a decompression schedule that does not violate Gradient Factor based ceiling.
 
