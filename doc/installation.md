@@ -27,9 +27,10 @@ Install latest Python:
 
 [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
 
-Install pyqt5
-
+Install pyqt5 from Command Prompt
+```
 python -m pip install pyqt5
+```
 
 ## Python &amp; PyQt5 for Linux
 
@@ -65,7 +66,7 @@ git pull https://github.com/eianlei/pydplan.git master
 
 # Run application:
 
-Once you have done all previous steps you should be able to launch the application by issuing the following command in the directory where you cloned the pydplan sources::
+Once you have done all previous steps you should be able to launch the application by issuing the following command in Windows Command Prompt or Linux terminal, in the directory where you cloned the pydplan sources:
 ```
 python pydplan\_main.py
 ```
