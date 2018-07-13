@@ -47,6 +47,8 @@ Under the **Calculate** tab there is a printout of calculated deco stops in tabu
 Below this the total runtime and average depth are shown.
 At the bottom one can configure the descent and ascent rates in m/min. Changing any of these will immediately recalculate and redraw views.
 
+#### TODO:
+*There should be tickbox that allows selecting 3 meter stop on/off.*
 
 ### **Custom** mode,
 The user can configure a custom dive profile and see the resulting Buhlmann model states.
@@ -159,6 +161,8 @@ Diagonal lines plot the M-values of each tissue. Each tissue is shown in differe
 - Combined, Heium + Nitrogen pressures
 - Helium only
 - Nitrogen only
+
+*TODO*: The M-value lines are not plotted correctly yet. Needs fixing.
 
 ## TC Pressures
 This panel plots the pressure on individual Tissue Compartments for Helium and Nitrogen separately.
