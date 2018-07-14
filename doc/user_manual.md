@@ -38,7 +38,7 @@ The user configures bottom depth, bottom time and gases to use, the application 
 
 Above the tabs there are two widgets that allow controlling the:
 - Bottom depth in meters
-- Bottom time in meters
+- Bottom time in minutes
 
 Changing any of these will immediately recalculate and redraw views. Feedback is immediate so one can easily see what changes take place when modifying parameters.
 
@@ -80,7 +80,7 @@ Following tank parameters can be configured or viewed:
 - liters: volume of the tank, used in gas consumption calculations
 - start (bar): starting pressure of the tank when taken into use on dive
 - SAC (L/MIN): Surface Air consumption
-- end (bar): calcualted end pressure of the tank for the configured profile
+- end (bar): calculated end pressure of the tank for the configured profile
 
 ### **TODO:**
 Warnings etc..
