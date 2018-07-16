@@ -19,8 +19,8 @@ Use this application at your own risk, the author provides no guarantees about t
 * Ignoring these warnings can cause your **death** or **serious and permanent injuries**!
 
 # INSTALLATION
-[Installation instructions](/doc/installation.md)
+[Installation instructions](/doc/installation_v2.md)
 
 # USER MANUAL
-[user manual](/doc/user_manual.md)
+[user manual](/doc/user_manual_v2.md)
 
