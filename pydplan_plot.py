@@ -245,7 +245,7 @@ class PlotPlanWidget(QWidget):
         status = 'ok'
         zeroLevel = self.plot_height * 0.75
         for point in  profileSampled:
-            margin = point.depth - point.ceiling_now
+            margin = point.depth - point.modelpoint.leadCeilingMeters
             if margin < 0:
                 qp.setPen(QPen(Qt.red,2, Qt.SolidLine))
                 mError = True
