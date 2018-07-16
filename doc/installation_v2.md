@@ -78,4 +78,4 @@ You should now see the application main window appearing:
 ![mainwin-shorturl](pyd_mainscreen.JPG)
 
 For instructions how to use the app, see
-[user manual](user_manual.md)
+[user manual](user_manual_v2.md)
