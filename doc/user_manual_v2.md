@@ -140,7 +140,10 @@ The thick green line is the calculated deco ceiling in 3 meter steps. Above it o
 The tank pressures are also plotted with gas changes, star end end pressures of tanks.
 
 The running average depth is plotted in grey.
-On left bottom quadrant the ceiling margin is plotted.
+
+On right bottom quadrant the ceiling margin is plotted.
+- When the margin is positive, which means dive profile does not violate the deco ceiling, you will see a solid black jagged line and the text "ceiling margin ok"
+- When there is ceiling violation, the violating parts are shown in thick red line, and there will be text "ceiling margin ERROR!" in red. This means the dive profile is not safe.
 
 ### partial pressures panel
 Plot of Oxygen, Nitrogen and Helium partial pressures at this profile. Oxygen and Nitrogen limit lines are shown:
@@ -151,6 +154,26 @@ Plot of Oxygen, Nitrogen and Helium partial pressures at this profile. Oxygen an
 
 ## TABLE
 This panel shows numerical data of the dive profile in a table.
+Each point in the dive profile is on a single row, whereas columns show data of that point.
+If you hover the cursor over a column heading, then you will see a longer explanation of the column data.
+
+The columns are
+- 'time', 'runtime in min:sec'
+- 'depth', 'current dive depth in meters'
+- 'phase','current dive phase'
+- 'T', 'currently used scuba tank ID'
+- 'o2/he', 'Oxygen/Helium % in current tank'
+- 'he', 'Helium % in current tank'
+- 'bar', 'Tank pressure in bar'
+- 'ppO2', 'Oxygen partial pressure in bar'
+- 'GF', 'Gradient Factor used'
+- 'C:3m', 'GF Ceiling depth at 3m increment'
+- 'CEIL', 'GF Ceiling depth in meters, no rounding'
+- 'margin', 'Ceiling margin, meters from current depth'
+- 'lead', 'leading/ceiling tissue compartment number'
+
+Following columns show the ceiling in meters for each tissue compartment number ffrom 1 to 16.
+
 
 ## PG
 This panel shows a Tissue Compartment pressure graph, where X-axis presents the Tissue Compartment pressure vs. Ambient Pressure (Depth) on Y-axis.
