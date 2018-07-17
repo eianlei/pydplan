@@ -14,6 +14,11 @@ FillCalc2.py is an auxiliary tool in this package for interactive gas mixing cal
 
 See [FillCalc2 documentations](/doc/fillcalc2.md) for more details about it.
 
+## modCalc2
+modCalc2.py is an auxiliary tool in this package for interactive MOD calculation.
+
+See [modCalc2 documentations](/doc/modcalc2.md) for more details about it.
+
 # DISCLAIMER!
 This is experimental prototype software under development! Do not use for planning actual dives!
 
