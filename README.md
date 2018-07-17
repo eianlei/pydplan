@@ -9,6 +9,11 @@ Pydplan is written in Python 3.6 and the GUI is using PyQt5 library for graphics
 
 ![mainwin-shorturl](/doc/pyd_mainscreen.JPG)
 
+## FillCalc2
+FillCalc2.py is an auxiliary tool in this package for interactive gas mixing calculations.
+
+See [FillCalc2 documentations](/doc/fillcalc2.md) for more details about it.
+
 # DISCLAIMER!
 This is experimental prototype software under development! Do not use for planning actual dives!
 
