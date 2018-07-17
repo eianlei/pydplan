@@ -23,7 +23,7 @@ start the tool by
     python FillCalc2.py
 And you should see the main window
 
-![mainwin-fillcalc](fillcalc2.JPG)
+![mainwin-fillcalc](fillcalc2.jpg)
 
 
 Now simply fill into the widgets the  current and wanted tank mixes.
