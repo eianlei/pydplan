@@ -24,3 +24,6 @@ Use this application at your own risk, the author provides no guarantees about t
 # USER MANUAL
 [user manual](/doc/user_manual_v2.md)
 
+# Source Code documentation
+
+[Source Code documentation](/doc/source_docs.md)
