@@ -2,13 +2,13 @@
 modCalc2.py is an auxiliary tool for interactive MOD (Maximum Operating Depth) calculation.
 
 # modCalc2 installation
-The tool requires two Python files to run:
+The tool requires just one Python file to run:
 
 file | purpose
 ------------ | -------------
 modCalc2.py | everything contained here
 
-You get these if you clone or pull the entire pydplan.
+You get it if you clone or pull the entire pydplan.
 You need Python 3 and PyQt5.
 
 # modCalc2 usage
