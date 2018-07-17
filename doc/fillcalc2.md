@@ -32,16 +32,20 @@ Then select the tab of your choise for a fill method:
 tab label | fill method
 ------------ | -------------
 Air | You are topping the tank with plain air. Obviously you will not then get the mix you maybe wanted. The app calculates what you will get.
-Nitrox |  You are topping the tank with Nitrox CFM. Obviously you will not then get more Heloium to the tank, but the app tries to calculate the O2% inflow to match you O2% target. You get error if you want something that cannot be done.
+Nitrox |  You are topping the tank with Nitrox CFM. Obviously you will not then get more Helium to the tank, but the app tries to calculate the O2% inflow to match your O2% target. You get error if you want something that cannot be done.
 Trimix | You are topping the tank with Trimix CFM. Here we assume you have only one mixing chamber and only one O2 sensor.
 Partial Pressure | Your are doing a partial pressure (decanting) fill. First fill in Helium, then Oxygen, finally top with air.
 He + Nitrox | You are decanting first pure Helium, then top with Nitrox CFM.
 
 If the mix you want is possible to make, then under the tab you will see the instructions how to make it. Otherwise you get an error.
 
-The application immediately recalculates when you change anything in the GUI widgets. The calculation is simple and you should not notice any delay. The SPinbox widgets can be used by either entering values from keyboard, or then increase/decrease value by clicking up/down arrows.
+The application immediately recalculates when you change anything in the GUI widgets. The calculation is simple and you should not notice any delay. The Spinbox widgets can be used by either entering values from keyboard, or then increase/decrease value by clicking up/down arrows.
 
-You can try to "simulate bleeding" your tank, if you are not getting the mix you want. Simply decrease the curent tank pressure by as much as you would then be bleeding actually, and you might find a solution.
+You can try to "simulate bleeding" your tank, if you are not getting the mix you want. Simply decrease the current tank pressure by as much as you would then be bleeding actually, and you might find a solution.
+
+The application assumes that for CFM fills the following Oxygen and Helium flows cannot be exceeded:
+- Oxygen max 36%, as your compressor can explode.
+- Helium max 32% as your compressor can overheat
 
 On the right hand side there is panel that calculates the cost of your fill.
 
@@ -49,6 +53,8 @@ The menu at the top of the main window is placeholder for future enhancements, a
 
 # target users
 The application is intended for certified [Trimix](https://en.wikipedia.org/wiki/Trimix_(breathing_gas)) gas blenders, who [blend gases](https://en.wikipedia.org/wiki/Gas_blending_for_scuba_diving) for [technical scuba diving](https://en.wikipedia.org/wiki/Technical_diving).
+
+It is assumed that anyone daring to use this application knows what they are doing.
 
 # disclaimers
 Use this application at your own risk, the author provides no guarantees about the correctness of the application, and assumes no liability for the use of it for any purpose!
