@@ -419,9 +419,10 @@ class PlotTissuesWidget(QWidget):
             qp.setPen(QPen(color, 1, Qt.SolidLine))
 
             x1, y1 = (0, 0)
-            for n, mPoint in enumerate( self.plan.model ):
-                x = (n / len(self.plan.model)) * self.plot_width
-                pressure = mPoint.tissues[tc].nitrogenPressure
+            for n, point in enumerate( self.plan.profileSampled):
+                x = (point.time / self.totalTime) * self.plot_width
+                #x = (n / len(self.plan.model)) * self.plot_width
+                pressure = point.modelpoint.tissues[tc].nitrogenPressure
                 y =  zeroLevel - ( (pressure / maxN2press) * (self.plot_height /2.0))
                 qp.drawLine(x1, y1, x, y)
                 x1 = x
@@ -457,9 +458,10 @@ class PlotTissuesWidget(QWidget):
             #color = QColor(255-(tc*10), tc*10, tc*10)
             qp.setPen(QPen(color, 1, Qt.SolidLine))
             x1, y1 = (0, 0)
-            for n, mPoint in enumerate( self.plan.model ):
-                x = (n / len(self.plan.model)) * self.plot_width
-                pressure = mPoint.tissues[tc].heliumPressure
+            for n, point in enumerate(self.plan.profileSampled):
+                x = (point.time / self.totalTime) * self.plot_width
+                #x = (n / len(self.plan.model)) * self.plot_width
+                pressure = point.modelpoint.tissues[tc].heliumPressure
                 y =  zeroLevel - ( (pressure / maxHEpress) * (self.plot_height/heScale))
                 qp.drawLine(x1, y1, x, y)
                 x1 = x
