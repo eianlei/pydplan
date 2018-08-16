@@ -8,7 +8,7 @@ from pydplan_classes import currentTank, DivePlan, DecoStop
 from copy import deepcopy
 from pydplan_buhlmann import depth2absolutePressure, Buhlmann, ModelPoint, Constants
 
-
+# gradient factor object
 class gradientFactor():
     def __init__(self, GFlow, GFhigh):
         self.gfSetFlag = False
