@@ -42,6 +42,7 @@ class gradientFactor():
 from pydplan_classes import PlanMode, TankType, ScubaTank
 from enum import Enum, auto
 
+# enumeration of dive phase state names, uses Python Enum lib, feature auto() to assign values
 class DivePhase(Enum):
     INIT_TANKS = auto()
     STARTING = auto()
@@ -499,6 +500,7 @@ def calculatePlan(diveplan : DivePlan):
                                 plannedStopPointer = -1
                 pass
             else:
+                # getting here is actually a disastrous bug, should handle it more seriously...
                 print('unsupported mode')
                 break
 
