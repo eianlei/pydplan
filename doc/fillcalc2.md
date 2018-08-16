@@ -17,6 +17,8 @@ tmx_calc.py | calculations and formulas, reusable with no dependecies to UI
 
 You get these if you clone or pull the entire [pydplan](https://github.com/eianlei/pydplan). Or just download these two if you are only interested in this app.
 
+You also need PyQt5 in Python3 environment of course.
+
 # FillCalc2 usage
 start the tool by
 
