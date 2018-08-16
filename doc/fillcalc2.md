@@ -67,9 +67,8 @@ Use this application at your own risk, the author provides no guarantees about t
 
 # Supported platforms
 The script has been tested on
-* Windows 7 with Python 3.6.x
-** probably also Win 8 and 10, but have not tested this yet
-* Linux, Red Hat 6.8,  with Python 3.6.x
+* Windows 7, and 10 with Python 3.6.x and 3.7.x
+* Linux: Red Hat 6.8, Ubuntu 18.4 LTS  with Python 3.6.x
 * It probably also works on MAC, but I have not tested this.
 * Will not run on Android as such. But an Android app might be there in the future...
 
