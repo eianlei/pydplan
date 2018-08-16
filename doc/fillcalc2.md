@@ -1,6 +1,6 @@
 # FillCalc2
-FillCalc2.py is an auxiliary tool for interactive gas mixing calculations.
-It will calculate how to blend a technical scuba diving gas mix given the current mix you have in tank and what you want. Several blendin methods are available.
+FillCalc2.py is an auxiliary tool included in the [pydplan](https://github.com/eianlei/pydplan) for interactive gas mixing calculations.
+It will calculate how to blend a technical scuba diving gas mix given the current mix you have in tank and what you want. Several blending methods are available.
 
 FillCalc2 is a further development of an earlier project at github:
 [trimix-fill](https://github.com/eianlei/trimix-fill)
@@ -15,7 +15,7 @@ file | purpose
 FillCalc2.py | the PyQt5 GUI defined here, call this module to start the app
 tmx_calc.py | calculations and formulas, reusable with no dependecies to UI
 
-You get these if you clone or pull the entire pydplan.
+You get these if you clone or pull the entire [pydplan](https://github.com/eianlei/pydplan). Or just download these two if you are only interested in this app.
 
 # FillCalc2 usage
 start the tool by
