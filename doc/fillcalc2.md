@@ -32,19 +32,27 @@ And you should see the main window
 
 
 Now simply fill into the widgets the  current and wanted tank mixes.
-Then select the tab of your choise for a fill method:
+
+For partial pressure fills, you can also select the gas law to be used. However, Van der Waals calculation is not yet implmented and is under development.
+
+gas law | description
+------------ | -------------
+Ideal gas law | Calculations are based on solving P * V = n * R * T, where P is the gas pressure, V is the tank volume, n is moles of gas, R is the universal gas constant, T is the system temperature. The equation reduces in this application to P1* n1 = P2* n2 and we can furthermore use the Dalton's law of partial pressures. This method works fairly well for fills up to 200 bar, and for mixes that do not have much Helium. For fills to 300 bar, and/or with significant amounts of Helium, the ideal gas law produces a significant error. However, the calculation is simple and quick and could be done even manually.
+Van der Waals | Calculations are based on solving the Van der Waals equation: (p + (n^2 * a /V^2)) * (V-n*b) = n * R * T for each stage of filling. The coefficients a and b depend on the gas mix. As it is a nasty cubic equation, the solution is done numerically by iteration. For each gas mix the a and b coefficients are calculated separately as Dalton's law is no longer applicable. The calculation is complicated and uses a lot of CPU cycles, but the result is much more accurate. Calculation by hand is not by any means practical.
+
+Finally select the tab of your choise for a fill method:
 
 tab label | fill method
 ------------ | -------------
 Air | You are topping the tank with plain air. Obviously you will not then get the mix you maybe wanted. The app calculates what you will get.
 Nitrox |  You are topping the tank with Nitrox CFM. Obviously you will not then get more Helium to the tank, but the app tries to calculate the O2% inflow to match your O2% target. You get error if you want something that cannot be done.
 Trimix | You are topping the tank with Trimix CFM. Here we assume you have only one mixing chamber and only one O2 sensor.
-Partial Pressure | Your are doing a partial pressure (decanting) fill. First fill in Helium, then Oxygen, finally top with air.
-He + Nitrox | You are decanting first pure Helium, then top with Nitrox CFM.
+Partial Pressure | You are doing a partial pressure (decanting) fill. First fill in Helium, then Oxygen, finally top with air. Often Helium and Oxygen fill is done with a booster pump.
+He + Nitrox | You are decanting first pure Helium, then top with Nitrox CFM. Standard trimixes can be made this way.
 
 If the mix you want is possible to make, then under the tab you will see the instructions how to make it. Otherwise you get an error.
 
-The application immediately recalculates when you change anything in the GUI widgets. The calculation is simple and you should not notice any delay. The Spinbox widgets can be used by either entering values from keyboard, or then increase/decrease value by clicking up/down arrows.
+The application immediately recalculates when you change anything in the GUI widgets. The calculation using ideal gas law is simple and you should not notice any delay. Van der Waals solution might take a bit longer. The Spinbox widgets can be used by either entering values from keyboard, or then increase/decrease value by clicking up/down arrows. Some values can be selected with comboboxes from a popout menu.
 
 You can try to "simulate bleeding" your tank, if you are not getting the mix you want. Simply decrease the current tank pressure by as much as you would then be bleeding actually, and you might find a solution.
 
@@ -88,13 +96,15 @@ GUI depends on PyQt5, you will need to install pyqt5 to your Python.
 
 # Unit system
 * Metric and EU units, Imperial units not supported
-* decimal separator is dot "." not comma ","
+* decimal separator is dot "." not comma "," (Python default)
 * Currently only bar can be used as pressure unit, PSI not supported
 * Gas mixes as percentages
 * Tank size in liters (cu-ft not supported)
+* currency unit is Euro
 
 # Gas laws used for calculation
-The calculation formulas are based on the [ideal gas law](https://en.wikipedia.org/wiki/Ideal_gas_law).
-There are more accurate models such as the [Van der Waals equation](https://en.wikipedia.org/wiki/Van_der_Waals_equation).
+The calculation formulas used by default are based on the [ideal gas law](https://en.wikipedia.org/wiki/Ideal_gas_law).
+
+A more accurate physical model is the [Van der Waals equation](https://en.wikipedia.org/wiki/Van_der_Waals_equation). Some implementation details at the page [van_der_waals.md](van_der_waals.md)
 
 Adiabatic heating and cooling due to compression and decompression of gases is not taken into account.
