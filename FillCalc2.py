@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import (QApplication, QComboBox, QGridLayout, QGroupBox,
 
 # import calculation modules
 from tmx_calc import *
-
+from vdw_calc import vdw_calc
 
 # define the main window GUI objects and callbacks
 class fill_calc_main(QMainWindow):
@@ -101,10 +101,14 @@ class fill_calc_main(QMainWindow):
         # input for wanted pressure, a combobox
         want_pressLabel = QLabel("Wanted tank pressure (bar):")
         self.want_pressSB = QSpinBox()
+        self.want_pressSB.setRange(1, 300)
+        self.want_pressSB.setValue(200)
+        self.want_pressSB.setSuffix(' bar')
         self.tankEndPressComboBox = QComboBox()
         self.tankTypeList = ['200', '232', '300']
         for i in range(len(self.tankTypeList)) :
             self.tankEndPressComboBox.addItem(self.tankTypeList[i])
+        self.tankEndPressComboBox.activated.connect(self.endbar_SB_change)
 
         self.gasDict = {'AIR': (21,0),'EAN32': (32,0),'EAN50': (50,0), 'OXYGEN':(100,0),
                         'TMX 10/70':(10,70),'TMX 12/65':(12,65),'TMX 15/55':(15,55),'TMX 18/45':(18,45),
@@ -137,12 +141,13 @@ class fill_calc_main(QMainWindow):
         wantLayout = QGridLayout()
         wantLayout.addWidget(want_pressLabel, 0, 0)
         wantLayout.addWidget(self.tankEndPressComboBox, 0, 1)
-        wantLayout.addWidget(modinmixLabel,1,0)
-        wantLayout.addWidget(self.modinComboBox, 1, 1)
-        wantLayout.addWidget(want_O2pctLabel, 2, 0)
-        wantLayout.addWidget(self.want_O2pctSB, 2, 1)
-        wantLayout.addWidget(want_HEpctLabel, 3, 0)
-        wantLayout.addWidget(self.want_HEpctSB, 3, 1)
+        wantLayout.addWidget(self.want_pressSB, 1, 1)
+        wantLayout.addWidget(modinmixLabel,2,0)
+        wantLayout.addWidget(self.modinComboBox, 2, 1)
+        wantLayout.addWidget(want_O2pctLabel, 3, 0)
+        wantLayout.addWidget(self.want_O2pctSB, 3, 1)
+        wantLayout.addWidget(want_HEpctLabel, 4, 0)
+        wantLayout.addWidget(self.want_HEpctSB, 4, 1)
         wantGroup.setLayout(wantLayout)
 
         # connect all widgets to calculateGas
@@ -218,6 +223,12 @@ class fill_calc_main(QMainWindow):
         layCtrl.addWidget(wantGroup, 1, 0)
         layCtrl.addWidget(costGroup, 0, 1, 2, 1)
 
+        self.gasLawCB = QComboBox()
+        self.gasLawCB.addItem('Ideal Gas Law')
+        self.gasLawCB.addItem('Van Der Waals Law')
+        self.gasLawCB.activated.connect(self.calculateGas)
+        layCtrl.addWidget(self.gasLawCB, 2,0)
+
         self.controlW.setLayout(layCtrl)
         self.lay_main.addWidget(self.controlW)
         self.createTabOut()
@@ -238,6 +249,10 @@ class fill_calc_main(QMainWindow):
         mixo2, mixHe = self.gasDict[self.modinComboBox.currentText()]
         self.want_O2pctSB.setValue(mixo2)
         self.want_HEpctSB.setValue(mixHe)
+
+    def endbar_SB_change(self):
+        endbar = float(self.tankEndPressComboBox.currentText())
+        self.want_pressSB.setValue(endbar)
 
     def createTabOut(self):
         self.tabOut = QTabWidget()
@@ -315,8 +330,9 @@ class fill_calc_main(QMainWindow):
 
 
     def calculateGas(self):
+        gas_law = self.gasLawCB.currentText()
         startbar = self.start_pressSB.value()
-        endbar = float(self.tankEndPressComboBox.currentText())
+        endbar = self.want_pressSB.value()
         start_o2 =  self.start_O2pctSB.value()
         start_he =  self.start_HEpctSB.value()
         end_o2 =  self.want_O2pctSB.value()
@@ -334,6 +350,8 @@ class fill_calc_main(QMainWindow):
         calc_method = cm[currentTab]
         result = tmx_calc(calc_method, startbar, endbar, start_o2, start_he,
                           end_o2, end_he, he_ig, o2_ig)
+        if gas_law == 'Van Der Waals Law':
+            resultVDW = vdw_calc(calc_method, startbar, endbar, start_o2, start_he, end_o2, end_he)
 
         add_o2 = result['add_o2']
         add_he = result['add_he']
@@ -347,14 +365,12 @@ class fill_calc_main(QMainWindow):
             self.t1r2.setText(result['status_text'])
         elif currentTab == 2:
             self.t2r2.setText(result['status_text'])
-        elif currentTab == 3:
-            self.t3r2.setText(result['status_text'])
-            # self.r3heFrom.setText("{:.1f}".format(startbar))
-            # self.r3heAdd.setText("{:.1f}".format(result['add_he']))
-            # self.r3O2From.setText("{:.1f}".format( startbar + result['add_he'] ))
-            # self.r3O2Add.setText("{:.1f}".format(result['add_o2']))
-            # self.r3airFrom.setText("{:.1f}".format( startbar + result['add_he'] + result['add_o2']))
-            # self.r3airAdd.setText("{:.1f}".format(endbar - result['add_o2'] - result['add_he'] -startbar))
+        elif currentTab == 3: # partial pressure fill
+            if gas_law == 'Van Der Waals Law':
+                self.t3r2.setText(resultVDW['status_text']) 
+            else:
+                self.t3r2.setText(result['status_text'])
+
         elif currentTab == 4:
             self.t4r2.setText(result['status_text'])
 
