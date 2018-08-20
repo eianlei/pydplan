@@ -2,7 +2,7 @@
 
 The procedure for calculating partial pressure fill by van der Waals equatlion (VDW):
 
-Calculate for the starting and wanted mix the A and B coefficients for those mixes.
+First calculate for the starting and wanted mix the A and B coefficients for those mixes.
 Then solve the VDW equation numerically (by iteration) for the n (mols) of total gas, when we know the P, V, a, b, R, T. 
 
 VDW cannot be solved analytically in any nice way as it is cubic, but numerical iteration finds a solution quickly. Use the Python scipy fsolve.
@@ -24,3 +24,28 @@ Then top with air.
 With ideal gas law (IDG) we would add 45.5 bar He, instead of 47.15 bar 
 -- and 12.1 bar O2 instead of 11.30. 
 So the resulting mix from IDG has less He and more O2 than what VDW gives. In this case the error is only a few percents, but it is there.
+
+## formula to calculate a and b
+
+a and b for O2, N2 and He are:
+
+| Gas    | a  | b  | molecular weight |
+| ------ | ---| --- | ---- |
+| Oxygen | 1.382  | 0.03186 | 31.9988
+| Nitrogen | 1.370  | 0.03870 | 28.01348
+| Helium | 0.0346  | 0.02380 | 4.0020602
+
+
+a and b for any mix of gases can be calculated by the following formula 
+
+![formula](vdw-ab-formula.gif) 
+
+## how big is the difference IDG vs. VDW
+
+The chart below shows the plot of an Ideal Gas Law pressure vs. mols of a gas in 12 liter tank at 20 deg-C. With IDG the plot is the same for any gas and is linear. 
+
+The there are plots using Van der Waals law for air and TMX 21/35. These plots are not linear, and for each gas mix they are quite different. Van der Waals law is much closer to real behaviour of gases, and for the purposes of technical gas blending is accurate enough.
+
+Ideal gas law works pretty well for air and basic Nitrox up to 200 bars. For 300 bar fills and Trimix there will be a big error.
+
+![chart](p_vs_mols_1.jpg)
