@@ -16,7 +16,7 @@
 # TODO change the start_pressSB max according to tankEndPressComboBox
 from PyQt5.QtGui import QPalette
 
-tmx_gui_version = "2.0"
+tmx_gui_version = "2.1"
 
 # import modules, like PyQt5 stuff
 from PyQt5.QtCore import Qt
@@ -223,6 +223,7 @@ class fill_calc_main(QMainWindow):
         layCtrl.addWidget(wantGroup, 1, 0)
         layCtrl.addWidget(costGroup, 0, 1, 2, 1)
 
+        # Combobox to select Van de Waals gas law
         self.gasLawCB = QComboBox()
         self.gasLawCB.addItem('Ideal Gas Law')
         self.gasLawCB.addItem('Van Der Waals Law')
