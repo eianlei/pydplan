@@ -16,7 +16,7 @@
 # TODO change the start_pressSB max according to tankEndPressComboBox
 from PyQt5.QtGui import QPalette
 
-tmx_gui_version = "2.1"
+tmx_gui_version = "2.2"
 
 # import modules, like PyQt5 stuff
 from PyQt5.QtCore import Qt
@@ -352,7 +352,9 @@ class fill_calc_main(QMainWindow):
         result = tmx_calc(calc_method, startbar, endbar, start_o2, start_he,
                           end_o2, end_he, he_ig, o2_ig)
         if gas_law == 'Van Der Waals Law':
-            resultVDW = vdw_calc(calc_method, startbar, endbar, start_o2, start_he, end_o2, end_he)
+            resultVDW = vdw_calc(start_bar = startbar, want_bar = endbar,
+             start_o2=start_o2 , start_he=start_he, want_o2=end_o2, want_he=end_he,
+             volume = liters, start_temp_c = 20.0)
 
         add_o2 = result['add_o2']
         add_he = result['add_he']

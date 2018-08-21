@@ -35,12 +35,14 @@ def ideal_gas_n(p, V, T):
 def van_der_waals_p(p, *args):
     n, V, T, a, b = args # unpack the args
     R= 0.0831451
-    return p + (n*n * a / (V*V)) * (V - n * b) - (n * R * T)
+    f = (p + (n*n * a) / (V*V)) * (V - (n * b)) - (n * R * T)
+    return f
 
 def van_der_waals_n(n, *args):
     p, V, T, a, b = args # unpack the args
     R= 0.0831451
-    return p + (n*n * a / (V*V)) * (V - n * b) - (n * R * T)
+    f = (p + (n*n * a) / (V*V)) * (V - (n * b)) - (n * R * T)
+    return f
 
 def vdw_mix_ab(o2_f, he_f, n2_f):
     ''' calculate vdw coefficients a and b for a mix of O2, N2, He
@@ -58,7 +60,7 @@ def vdw_mix_ab(o2_f, he_f, n2_f):
             mix_b += math.sqrt( b[i]*b[j])* x[i]*x[j]
     return mix_a, mix_b
 
-def vdw_solve_pressure(mols, volume, o2_f, he_f, n2_f, temperature, seed_p):
+def vdw_solve_pressure(mols, volume, o2_f, he_f, n2_f, temperature):
     '''
     returns the pressure of a gas mixture of o2, he, n2 by solving Van der Waals equation
     given mols, volume and temperature in Celsius
@@ -147,12 +149,14 @@ def vdw_calc(start_bar: float = 0.0, want_bar: float = 200.0,
     want_n2_f = 1.0 - want_o2_f - want_he_f
 
     # how many mols of gas we have at start, in total and of each kind
-    vdw_start_mols_all = vdw_solve_mols(start_bar, volume, start_o2_f, start_he_f, start_n2_f, start_temp_c)
+    solve_start = vdw_solve_mols(start_bar, volume, start_o2_f, start_he_f, start_n2_f, start_temp_c)
+    vdw_start_mols_all = solve_start[0]
     vdw_start_mols_o2 = vdw_start_mols_all * start_o2_f
     vdw_start_mols_he = vdw_start_mols_all * start_he_f
     vdw_start_mols_n2 = vdw_start_mols_all * start_n2_f
     # how many mols of gas we want to have, in total and of each kind
-    vdw_want_mols_all = vdw_solve_mols(want_bar, volume, want_o2_f, want_he_f, want_n2_f, end_temp_c)
+    solve_want_mols_all = vdw_solve_mols(want_bar, volume, want_o2_f, want_he_f, want_n2_f, end_temp_c)
+    vdw_want_mols_all = solve_want_mols_all[0]
     vdw_want_mols_o2 = vdw_want_mols_all * want_o2_f
     vdw_want_mols_he = vdw_want_mols_all * want_he_f
     vdw_want_mols_n2 = vdw_want_mols_all * want_n2_f
@@ -168,7 +172,8 @@ def vdw_calc(start_bar: float = 0.0, want_bar: float = 200.0,
     mix_he_he_f = vdw_want_mols_he  / mix_he_mols_all       #
     mix_he_n2_f = 1.0 - mix_he_o2_f - mix_he_he_f
     # then solve for pressure of this new mix
-    mix_helium_bars = vdw_solve_pressure(mix_he_mols_all, volume, mix_he_o2_f, mix_he_he_f, mix_he_n2_f, start_temp_c)
+    solve_mix_helium_bars = vdw_solve_pressure(mix_he_mols_all, volume, mix_he_o2_f, mix_he_he_f, mix_he_n2_f, start_temp_c)
+    mix_helium_bars = solve_mix_helium_bars[0]
     vdw_fill_he_bars = mix_helium_bars - start_bar # pressure of helium to fill
 
     # air is topped last, but we need to calculate how much we need it, so we can calculate for oxygen
@@ -179,11 +184,12 @@ def vdw_calc(start_bar: float = 0.0, want_bar: float = 200.0,
     mix_o2_he_f = vdw_want_mols_he / mix_o2_mols_all
     mix_o2_n2_f = 1.0 - mix_o2_o2_f - mix_o2_he_f
     # then solve for pressure of this new mix
-    mix_oxygen_bars = vdw_solve_pressure(mix_o2_mols_all, volume, mix_o2_o2_f, mix_o2_he_f, mix_o2_n2_f, start_temp_c)
+    solve_mix_oxygen_bars = vdw_solve_pressure(mix_o2_mols_all, volume, mix_o2_o2_f, mix_o2_he_f, mix_o2_n2_f, start_temp_c)
+    mix_oxygen_bars = solve_mix_oxygen_bars[0]
     vdw_fill_o2_bars = mix_oxygen_bars - mix_helium_bars # pressure of oxygen to fill
 
     # finally air
-    vdw_fill_air_bars = want_bar - vdw_fill_o2_bars
+    vdw_fill_air_bars = want_bar - mix_oxygen_bars
 
     vdw_result['fill_he_bars']  = vdw_fill_he_bars
     vdw_result['fill_o2_bars']  = vdw_fill_o2_bars
@@ -191,6 +197,13 @@ def vdw_calc(start_bar: float = 0.0, want_bar: float = 200.0,
 
     start_mix = "Starting from {} bar with mix {:.0f}/{:.0f}/{:.0f} (O2/He/N).".format(
         start_bar, start_o2, start_he, (100 - start_o2 - start_he))
+    result_mix = "Resulting mix will be {:.0f}/{:.0f}/{:.0f} (O2/He/N).".format(
+        want_o2, want_he, 100-want_he-want_o2)
+    he_fill = "From {:.1f} bars add {:.1f} bar Helium," \
+        .format(start_bar, vdw_fill_he_bars)
+    o2_fill = "From {:.1f} bars add {:.1f} bar Oxygen," \
+        .format(mix_helium_bars, vdw_fill_o2_bars)
+
     result = "{}\n" \
              "Van der Waals blend:\n" \
              " - {}\n" \
@@ -198,5 +211,6 @@ def vdw_calc(start_bar: float = 0.0, want_bar: float = 200.0,
              " - From {:.1f} bars add {:.1f} bar air to {:.1f} bar.  \n" \
              "{}\n".format(
         start_mix, he_fill, o2_fill, mix_oxygen_bars, vdw_fill_air_bars, want_bar, result_mix)
+    vdw_result['status_text'] = result
 
     return vdw_result
