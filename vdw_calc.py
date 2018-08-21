@@ -6,7 +6,8 @@
 # github project https://github.com/eianlei
 # Python-3 functions:
 #    vdw_calc() calculates trimix blending using Van der Waals gas law instead of ideal gas law
-#    this is placeholder - the function is not implemented yet"
+#    this is a quick and dirty implementation that needs more testing
+#    and there is no error checking what so ever, so crashes are more than likely
 
 import math
 from scipy.optimize import fsolve

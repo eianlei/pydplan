@@ -1,11 +1,13 @@
 # Van der Waals implementation
 
+Module vdw_calc.py
+
 The procedure for calculating partial pressure fill by van der Waals equation (VDW):
 
 First calculate for the starting and wanted mix the A and B coefficients for those mixes.
 Then solve the VDW equation numerically (by iteration) for the n (mols) of total gas, when we know the P, V, a, b, R, T. 
 
-VDW cannot be solved analytically in any nice way as it is cubic, but numerical iteration finds a solution quickly. Use the Python scipy fsolve.
+VDW cannot be solved analytically in any nice way as it is cubic, but numerical iteration finds a solution quickly. Python scipy fsolve is used, and as a seed the ideal gas law solution is given.
 
 Then assume we have analyzed the gas O2 and He percentages correctly, so we can calculate how many mols of O2, N2, He gas molecules we have, and will want.
 
@@ -39,6 +41,8 @@ a and b for O2, N2 and He are:
 a and b for any mix of gases can be calculated by the following formula 
 
 ![formula](vdw-ab-formula.gif) 
+
+This is implemented by the function vdw_mix_ab() to calculate vdw coefficients a and b for a mix of O2, N2, He.
 
 ## how big is the difference IDG vs. VDW
 

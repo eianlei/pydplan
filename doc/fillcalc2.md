@@ -2,7 +2,7 @@
 FillCalc2.py is an auxiliary tool included in the [pydplan](https://github.com/eianlei/pydplan) for interactive gas mixing calculations.
 It will calculate how to blend a technical scuba diving gas mix given the current mix you have in tank and what you want. Several blending methods are available.
 
-FillCalc version 2.1 adds a placeholder for a future feature: Van der Waals gas law used in partial pressure blending.  
+FillCalc version 2.2 adds Van der Waals gas law that can be used for more accurate partial pressure blending.   
 
 FillCalc2 is a further development of an earlier project at github:
 [trimix-fill](https://github.com/eianlei/trimix-fill)
@@ -33,14 +33,14 @@ And you should see the main window
 
 Now simply fill into the widgets the  current and wanted tank mixes.
 
-For partial pressure fills, you can also select the gas law to be used. However, Van der Waals calculation is not yet implmented and is under development.
+For partial pressure fills, you can also select the gas law to be used. However, Van der Waals calculation implmentation is under development and not very well tested.
 
 gas law | description
 ------------ | -------------
 Ideal gas law | Calculations are based on solving P * V = n * R * T, where P is the gas pressure, V is the tank volume, n is moles of gas, R is the universal gas constant, T is the system temperature. The equation reduces in this application to P1* n1 = P2* n2 and we can furthermore use the Dalton's law of partial pressures. This method works fairly well for fills up to 200 bar, and for mixes that do not have much Helium. For fills to 300 bar, and/or with significant amounts of Helium, the ideal gas law produces a significant error. However, the calculation is simple and quick and could be done even manually.
-Van der Waals | Calculations are based on solving the Van der Waals equation: (p + (n^2 * a /V^2)) * (V-n*b) = n * R * T for each stage of filling. The coefficients a and b depend on the gas mix. As it is a nasty cubic equation, the solution is done numerically by iteration. For each gas mix the a and b coefficients are calculated separately as Dalton's law is no longer applicable. The calculation is complicated and uses a lot of CPU cycles, but the result is much more accurate. Calculation by hand is not by any means practical.
+Van der Waals | Calculations are based on solving the Van der Waals equation: (p + (n^2 * a /V^2)) * (V-n*b) = n * R * T for each stage of filling. The coefficients a and b depend on the gas mix. As it is a nasty cubic equation, the solution is done numerically by iteration. For each gas mix the a and b coefficients are calculated separately as Dalton's law is no longer applicable in this case. The calculation is complicated and uses a lot of CPU cycles, but the result is much more accurate. Calculation by hand is not by any means practical. Some implementation details at the page [van_der_waals.md](van_der_waals.md)
 
-Finally select the tab of your choise for a fill method:
+Finally select the tab of your choice for a fill method:
 
 tab label | fill method
 ------------ | -------------
