@@ -1,6 +1,6 @@
 # Van der Waals implementation
 
-The procedure for calculating partial pressure fill by van der Waals equatlion (VDW):
+The procedure for calculating partial pressure fill by van der Waals equation (VDW):
 
 First calculate for the starting and wanted mix the A and B coefficients for those mixes.
 Then solve the VDW equation numerically (by iteration) for the n (mols) of total gas, when we know the P, V, a, b, R, T. 
