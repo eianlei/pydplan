@@ -678,7 +678,10 @@ class pydplan_main(QMainWindow):
         if self.divePlan.planMode == PlanMode.Calculate.value:
             outTextLines = ['runtime stop-at duration']
             for stop in self.divePlan.decoStopsCalculated:
-                stopText = '{:>2.0f} min, {:>4.0f} m,  {:>3.0f} min'.format(stop.runtime/60.0, stop.depth, stop.time/60.0)
+                if stop != None:
+                    stopText = '{:>2.0f} min, {:>4.0f} m,  {:>3.0f} min'.format(stop.runtime/60.0, stop.depth, stop.time/60.0)
+                else:
+                    stopText = '** empty stop record **'
                 outTextLines.append(stopText)
             outText =  '\n'.join(outTextLines)
             self.divePlan.widgetsCtrl['calcDecoLabel'].setText(outText)

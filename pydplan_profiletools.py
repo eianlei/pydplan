@@ -275,6 +275,7 @@ def calculatePlan(diveplan : DivePlan):
     tanksCheck(diveplan, DivePhase.INIT_TANKS) # intialize tanks
     # note that tanksCheck may select the diveplan.currentTank
     divephase = DivePhase.STARTING
+    currentDecoDone = -1 # FIXME: ugly hack, see below
     while True :
         index += 1
         if index > 500:
@@ -380,8 +381,10 @@ def calculatePlan(diveplan : DivePlan):
             beginDepth = endDepth
             runtime += intervalTankChange
             intervalMinutes = intervalTankChange / 60.0
-            divephase = tanksCheck(diveplan, DivePhase.STOP_ASC_T,
+            tanksCheck(diveplan, DivePhase.STOP_ASC_T,
                                    beginDepth, endDepth, intervalMinutes, runtime=runtime)
+            # force a deco stop after tank change, this allows recoding it properly
+            divephase = DivePhase.STOP_DECO
             #print('+ STOP_CHG_TANK_ASC at {} m '.format(endDepth))
 
         elif divephase == DivePhase.STOP_DECO:
@@ -447,17 +450,18 @@ def calculatePlan(diveplan : DivePlan):
             # which mode of operation: 'Custom', 'Calculate', 'Import'
             if diveplan.planMode == PlanMode.Calculate.value:
                 # we are in Calculate mode,
-                if divephase == DivePhase.STOP_ASC_T:
-                    # stop for a tank change,
-                    continue
                 # check that next step will not cross ceiling
                 if endDepth  <= model.leadCeilingStop and divephase != DivePhase.STOP_DECO:
-                    # we have hit a deco ceiling, check if starting or ongoing deco
-                    divephase = DivePhase.STOP_DECO
+                    # we have hit a deco ceiling or tanks change, check if starting or ongoing deco
+                    if divephase == DivePhase.STOP_ASC_T:
+                        # stop for a tank change first
+                        pass
+                    else:
+                        divephase = DivePhase.STOP_DECO
                     currentDecoDone = 0.0
                     # force the next depth to be at the step
                     if endDepth < model.leadCeilingStop:
-                        # this is a bounce
+                        # this is a bounce, but should not occur due to fixes done higher up
                         print('BOUNCE at {} s {} m'.format(runtime, endDepth))
                     beginDepth= model.leadCeilingStop
                     endDepth = beginDepth
@@ -475,9 +479,16 @@ def calculatePlan(diveplan : DivePlan):
                     newDecoStop = DecoStop(depth=beginDepth, time=0.0, number=0)
                     newDecoStop.runtime = runtime
                 elif divephase == DivePhase.STOP_DECO:
-                    # ongoing deco stop, increment the timer
-                    currentDecoDone += intervalDeco
-                    #todo: check long it has been now?
+                    if  currentDecoDone == -1:
+                        # really dirty fix
+                        currentDecoDone = intervalDeco
+                        newDecoStop = DecoStop(depth=beginDepth, time=intervalDeco, number=0)
+                        newDecoStop.runtime = runtime
+                        pass
+                    else:
+                        # ongoing deco stop, increment the timer
+                        currentDecoDone += intervalDeco
+                        #todo: check long it has been now?
                     if newDecoStop != None:
                         newDecoStop.time = currentDecoDone
                     # check if time to end deco
