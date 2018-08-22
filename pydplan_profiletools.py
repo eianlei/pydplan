@@ -343,7 +343,12 @@ def calculatePlan(diveplan : DivePlan):
             intervalMinutes = intervalAscent / 60.0
             beginDepth = endDepth
             stepAscend = calculateStepAscend(beginDepth, intervalAscent)
-            endDepth   = beginDepth - stepAscend
+            if (beginDepth - stepAscend) < model.leadCeilingStop:
+                print('ASCENDING bounce stop at {} m, runtime {}, index {}'
+                      .format(model.leadCeilingStop, runtime, index))
+                endDepth = model.leadCeilingStop
+            else:
+                endDepth   = beginDepth - stepAscend
             if endDepth <= 0.0:
                 divephase = DivePhase.SURFACE
                 beginDepth = 0.0
@@ -358,7 +363,12 @@ def calculatePlan(diveplan : DivePlan):
             intervalMinutes = intervalAscent / 60.0
             beginDepth = endDepth
             stepAscend = calculateStepAscend(beginDepth, intervalAscent)
-            endDepth   = beginDepth - stepAscend
+            if (beginDepth - stepAscend) < model.leadCeilingStop:
+                print('ASC_T bounce stop at {} m, runtime {}, index {}'
+                      .format(model.leadCeilingStop, runtime, index))
+                endDepth = model.leadCeilingStop
+            else:
+                endDepth   = beginDepth - stepAscend
             if endDepth <= diveplan.changeDepth:
                 endDepth = diveplan.changeDepth
                 divephase = DivePhase.STOP_ASC_T
@@ -441,13 +451,16 @@ def calculatePlan(diveplan : DivePlan):
                     # stop for a tank change,
                     continue
                 # check that next step will not cross ceiling
-                if endDepth <= model.leadCeilingStop and divephase != DivePhase.STOP_DECO:
+                if endDepth  <= model.leadCeilingStop and divephase != DivePhase.STOP_DECO:
                     # we have hit a deco ceiling, check if starting or ongoing deco
                     divephase = DivePhase.STOP_DECO
                     currentDecoDone = 0.0
                     # force the next depth to be at the step
+                    if endDepth < model.leadCeilingStop:
+                        # this is a bounce
+                        print('BOUNCE at {} s {} m'.format(runtime, endDepth))
                     beginDepth= model.leadCeilingStop
-                    endDepth= beginDepth
+                    endDepth = beginDepth
                     # now set the gradient factor
                     newPoint.gfNow = gfObject.gfSet(endDepth)
                     newPoint.gfSet = True
