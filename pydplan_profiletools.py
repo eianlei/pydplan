@@ -362,8 +362,9 @@ def calculatePlan(diveplan : DivePlan):
             if endDepth <= diveplan.changeDepth:
                 endDepth = diveplan.changeDepth
                 divephase = DivePhase.STOP_ASC_T
-            tanksCheck(diveplan, DivePhase.ASC_T, beginDepth, endDepth, intervalMinutes, runtime=runtime)
-            pass
+            else:
+                tanksCheck(diveplan, DivePhase.ASC_T, beginDepth, endDepth, intervalMinutes, runtime=runtime)
+
 
         elif divephase == DivePhase.STOP_ASC_T:
             beginDepth = endDepth
@@ -435,7 +436,11 @@ def calculatePlan(diveplan : DivePlan):
                          DivePhase.STOP_ASC_T]:
             # which mode of operation: 'Custom', 'Calculate', 'Import'
             if diveplan.planMode == PlanMode.Calculate.value:
-                # we are in Calculate mode, check that next step will not cross ceiling
+                # we are in Calculate mode,
+                if divephase == DivePhase.STOP_ASC_T:
+                    # stop for a tank change,
+                    continue
+                # check that next step will not cross ceiling
                 if endDepth <= model.leadCeilingStop and divephase != DivePhase.STOP_DECO:
                     # we have hit a deco ceiling, check if starting or ongoing deco
                     divephase = DivePhase.STOP_DECO
