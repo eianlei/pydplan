@@ -2,6 +2,8 @@
 FillCalc2.py is an auxiliary tool included in the [pydplan](https://github.com/eianlei/pydplan) for interactive gas mixing calculations.
 It will calculate how to blend a technical scuba diving gas mix given the current mix you have in tank and what you want. Several blending methods are available.
 
+There is also a Windows/.NET/C# version _"FillCalcWin"_ at https://github.com/eianlei/FillCalcWin, which is prebuilt and can be installed with a single click without any dev tools.
+
 FillCalc version 2.2 adds Van der Waals gas law that can be used for more accurate partial pressure blending.   
 
 FillCalc2 is a further development of an earlier project at github:
