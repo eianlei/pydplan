@@ -12,7 +12,7 @@ FillCalc2 is a further development of an earlier project at github:
 But instead of using TkInter as in trimix-fill, FillCalc2.py uses PyQt5 as graphics library and is more interactive.
 
 # FillCalc2 installation
-The tool requires two Python files to run:
+The tool requires working Python 3.6 or newer and following Python files to run:
 
 file | purpose
 ------------ | -------------
@@ -20,7 +20,7 @@ FillCalc2.py | the PyQt5 GUI defined here, call this module to start the app
 tmx_calc.py | Calculations and formulas based on Ideal Gas Law, reusable with no dependecies to UI
 vdw_calc.py | Calculation of partial pressure blending based on Van der Waals gas law (under development)
 
-You get these if you clone or pull the entire [pydplan](https://github.com/eianlei/pydplan). Or just download these two if you are only interested in this app.
+You get these if you clone or pull the entire [pydplan](https://github.com/eianlei/pydplan). Or just download these if you are only interested in this app.
 
 You also need PyQt5 in Python3 environment of course.
 
