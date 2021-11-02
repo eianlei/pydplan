@@ -21,8 +21,10 @@ tmx_calc.py | Calculations and formulas based on Ideal Gas Law, reusable with no
 vdw_calc.py | Calculation of partial pressure blending based on Van der Waals gas law (under development)
 
 You get these if you clone or pull the entire [pydplan](https://github.com/eianlei/pydplan). Or just download these if you are only interested in this app.
+Install following dependencies:
 
-You also need PyQt5 in Python3 environment of course.
+    python -m pip install scipy
+    python -m pip install pyqt5
 
 # FillCalc2 usage
 start the tool by
