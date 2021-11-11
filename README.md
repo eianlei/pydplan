@@ -7,6 +7,9 @@ It is particularily intended for learning and understanding how the Bühlmann al
 
 Pydplan is written in Python 3.6 and the GUI is using PyQt5 library for graphics.
 
+There is also a "branch" of PyDplan called SCALC that works as a web application. It is a transpilation of Python source code to JavaScript, and the GUI implemented by HTML5, CSS and Javascript.
+See the SCALC project is at https://github.com/eianlei/scalc
+
 ![mainwin-shorturl](/doc/pyd_mainscreen.JPG)
 
 ## FillCalc2
