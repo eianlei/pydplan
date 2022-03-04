@@ -127,7 +127,7 @@ class mod_gui_win(QWidget):
         o2pct = self.o2pctSpinBox.value()
         self.o2pctSlider.setValue(o2pct)
         ppo2 = self.ppo2SpinBox.value()
-        self.ppo2Slider.setValue(ppo2*10)
+        self.ppo2Slider.setValue(int(ppo2*10))
         mod_m = mod_calc(ppo2, o2pct)
         self.modout.setText("{:.1f}".format(mod_m))
         #print("calc_cmd o2pct= {} ppo2= {} => mod= {}".format(o2pct, ppo2, mod_m))
