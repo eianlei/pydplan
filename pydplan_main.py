@@ -1,15 +1,18 @@
 # pydplan_main.py
-""" 
-""" 
-# 2025-10-10 refresh update to run on Python 3.14 and PyQt5 latest version
-# (c) 2025 Ian Leiman, ian.leiman@gmail.com
-#   
-# main module for PYDPLAN, a Python Dive Planner with PyQt5 GUI
-# py -m pip install PyQt5
-# py -m pip install PyQt5-stubs
+""" (c) 2025 Ian Leiman, ian.leiman@gmail.com
+main module for PYDPLAN, a Python Dive Planner with PyQt5 GUI
+github: https://github.com/eianlei/pydplan
+last edited 2025-10-10
+- the app was no longer running on Python 3.14 and PyQt5 latest version, fixed all issues
+- fixed many qtplotting call args from float to int, py 3.14 no longer does that automatically
+- also added doc strings and type hints in several modules
 
+Following modules must be installed:
+ py -m pip install PyQt5
+ py -m pip install PyQt5-stubs
+""" 
 
-# import modules, like PyQt5 stuff
+# import modules, pydpla internal and PyQt5 GUI
 from pydplan_classes import DivePlan, DecoStop
 from pydplan_plot import PlotPlanWidget, PlotBelowWidget, PlotPressureGraphWidget, \
     PlotTissuesWidget
@@ -26,10 +29,11 @@ from PyQt5.QtWidgets import (QMainWindow, QApplication, QWidget, QHBoxLayout, QS
                              QGridLayout, QTabWidget, QVBoxLayout, QSplitter, QSpinBox, QTableWidget,
                              QFrame)      
 
-globalDivePlan =  None
+globalDivePlan: DivePlan 
 
 # define the main window GUI objects and callbacks
 class pydplan_main(QMainWindow):
+    """ main window for pydplan dive planner """
 
     def __init__(self):
         super().__init__()

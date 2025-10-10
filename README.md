@@ -1,5 +1,18 @@
 # PyDplan = Python Dive PLANner
+## 2025-10-10 update
+The Python source code has been updated such that the app will run on Python 3.14 and latest PyQt5 GUI library.
+Following changes have been made:
+- Many calls to Qt drawing functions had no type checking but require int arguments. Earlier py versions apparently silently converted floats to ints, but py 3.14 requires you do the dirty work or are more diligent. Now the args are for sure converted to int.
+- Added type hints
+- Added lots of doc strings
 
+This code was first developed in 2018 for py 3.6.
+Note that there is also a Web-Javascript implementation that reuses some of the concepts of this Python app. That code was done 2021. 
+Look at: https://github.com/eianlei/scalc
+
+There would also be the newer PyQt6, but that has many breaking changes. PySide6 is sadly also not 100% compatible.
+
+## Introduction
 Pydplanner is a Graphical User Interface application for the desktop (Windows, Linux, MAC, etc)
 for planning mixed gas staged decompression technical scuba dives. 
 Pydplanner can be used for interactive planning of decompression dives using the Bühlmann algorithm.

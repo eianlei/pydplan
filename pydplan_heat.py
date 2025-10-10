@@ -1,8 +1,11 @@
-#
-# (c) 2018 Ian Leiman, ian.leiman@gmail.com
-# pydplan_heat
+# pydplan_heat.py
+# (c) 2025 Ian Leiman, ian.leiman@gmail.com
 # part of PYDPLAN, a Python Dive Planner with PyQt5 GUI
-# hatmap plotting tools
+# heatmap plotting tools
+""" this module provides a QWidget to plot the tissue compartment saturation heat map
+    for the currently selected model point in the dive plan
+    2025-10-10 fixed many qtplotting call args from float to int, py 3.14 no longer does that automatically
+    """
 
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
@@ -10,19 +13,21 @@ from PyQt5.QtGui import QPainter, QPainterPath, QLinearGradient, QBrush, QPalett
 from PyQt5.QtWidgets import QWidget
 from pydplan_buhlmann import ModelPoint
 from pydplan_plot import colors
+from pydplan_classes import DivePlan
 
 class PlotHeatMapWidget(QWidget):
-    def __init__(self, plan=None):
+    """ plot the tissue compartment saturation heat map """
+    def __init__(self, plan: DivePlan ):
         super().__init__()
-        self.plan = plan
+        self.plan: DivePlan = plan
         self.initUI()
 
     def initUI(self):
         self.qp = QPainter()
         self.show()
 
-    def setPlan(self, plan):
-        self.plan = plan
+    def setPlan(self, plan: DivePlan):
+        self.plan: DivePlan = plan
 
     def paintEvent(self, e):
         self.qp.begin(self)
@@ -42,8 +47,8 @@ class PlotHeatMapWidget(QWidget):
         qp.drawText(0, 10,'Heat map here')
         #xStep = self.plot_width / len(self.plan.model)
         #yStep = self.plot_height / Model.COMPS
-        xStep = 5
-        yStep = 10
+        xStep: int = 5
+        yStep: int = 10
 
         # iterate all compartments
         for tc in range(ModelPoint.COMPS):
@@ -66,23 +71,23 @@ class PlotHeatMapWidget(QWidget):
 
                 if ppTot < ambP:
                     # tissue is on gassisng show blue, 100% is totally dark, less is lighter
-                    delta = 255 * (ambP - ppTot)/ambP
+                    delta: int = int(255 * (ambP - ppTot)/ambP)
                     hColor.setHsl(240, delta, delta)
                     brush = QBrush(hColor)
                 else:
                     # tissue is supersaturated and offgassing, show green to red gradient
                     if ppTot < ambTolP:
                         # tissue is below limit, so not at red yet
-                        delta = 100 * (ambTolP - ppTot) / ppTot
+                        delta = int(100 * (ambTolP - ppTot) / ppTot)
                         hColor.setHsl(120, delta, delta)
                         brush = QBrush(hColor)
                     else:
                         # exceeding limit, show red hot
-                        delta = ppTot / ambTolP * 50 + 150
+                        delta = int(ppTot / ambTolP * 50 + 150)
                         hColor.setHsl(0, delta, 127)
                         brush = QBrush(hColor)
-                x = n * xStep
-                y = tc* yStep
+                x: int = int(n * xStep)
+                y: int = int(tc* yStep)
                 qp.setBrush(brush)
                 qp.drawRect(x, y, xStep, yStep)
 

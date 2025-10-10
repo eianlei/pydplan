@@ -1,11 +1,18 @@
-#
-# (c) 2018 Ian Leiman, ian.leiman@gmail.com
-# pydplan_plot
+# pydplan_plot.py
+# (c) 2025 Ian Leiman, ian.leiman@gmail.com
 # part of PYDPLAN, a Python Dive Planner with PyQt5 GUI
 # plotting tools
+""" this module provides several QWidget classes to plot various aspects of the dive plan
+    PlotBelowWidget: plots the partial pressures of O2, He, N2 vs time
+    PlotPlanWidget: plots the depth profile, ceiling, tanks, tank pressure vs time
+    PlotTissuesWidget: plots the tissue compartment pressures vs time
+    all plots are scaled to fit the current window size
+    2025-10-10 fixed many qtplotting call args from float to int, py 3.14 no longer does that automatically
+"""
 
+from pydplan_classes import DivePlan
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QPainterPath, QLinearGradient, QBrush, QPen, QColor
+from PyQt5.QtGui import QPainter, QPainterPath, QLinearGradient, QBrush, QPen, QColor, QPaintEvent
 from PyQt5.QtWidgets import QWidget
 
 from pydplan_buhlmann import ModelPoint
@@ -17,17 +24,21 @@ colors = [Qt.black, Qt.gray, Qt.lightGray, Qt.darkGray,
           Qt.darkMagenta, Qt.magenta, Qt.yellow, Qt.darkRed]
 
 class PlotBelowWidget(QWidget):
-    def __init__(self, plan=None):
+    """ plot the partial pressures of O2, He, N2 vs time
+    """
+    def __init__(self, plan: DivePlan = None):
         super().__init__()
-        self.plan  = plan
+        self.plan: DivePlan  = plan
         self.maxPressure = 3.0
         self.initUI()
 
     def initUI(self):
+        """ initialize the window   """
         self.qp = QPainter()
         self.show()
 
     def paintEvent(self, e):
+        """ when any event occurs, like resize, we also redraw the plot """
         size = self.size()
         self.plot_width = size.width() -50
         self.plot_height = size.height() -5
@@ -38,7 +49,9 @@ class PlotBelowWidget(QWidget):
 
         self.qp.end()
 
-    def drawPP(self,qp):
+    def drawPP(self,qp: QPainter):
+        """ draw the partial pressures of O2, He, N2 vs time
+        """
         qp.drawText(5, self.plot_height+5 , 'PARTIAL PRESSURES O2, He, N2')
         if not self.plan.profileSampled :
             return
@@ -86,7 +99,12 @@ class PlotBelowWidget(QWidget):
         qp.drawLine(0, int(y), int(self.plot_width), int(y))
         qp.drawText(int(self.plot_width/2), int(y + 10), 'ppN2=3.16 limit (END=30m)')
 
-    def drawPressureGrid(self, qp):
+    def drawPressureGrid(self, qp: QPainter):
+        """ draw the pressure grid lines
+
+        Args:
+            qp (_type_): qt painter
+        """
         qp.setPen(QPen(Qt.gray, 1, Qt.DotLine))
         # pressure lines at maxPressure/6 bar intervals
         for gline in range(7) :
@@ -101,9 +119,10 @@ class PlotBelowWidget(QWidget):
 
 ##################################################################################
 class PlotPlanWidget(QWidget):
-    def __init__(self, plan=None):
+    """ plot the depth profile, ceiling, tanks, tank pressure vs time """
+    def __init__(self, plan: DivePlan =None):
         super().__init__()
-        self.plan = plan
+        self.plan: DivePlan = plan
         self.profileSampled = None
         self.TC = None
         self.maxTC = None
@@ -117,10 +136,12 @@ class PlotPlanWidget(QWidget):
 
     # set the vectorised format of profile
     def setPlan(self, plan):
+        """ set the dive plan to plot """
         self.plan = plan
 
     # when any event occurs, like resize, we also redraw the plot
-    def paintEvent(self, e):
+    def paintEvent(self, e: QPaintEvent):
+        """ when any event occurs, like resize, we also redraw the plot """
         #qp = QPainter()
         self.qp.begin(self)
         self.drawSize(self.qp)
@@ -142,6 +163,7 @@ class PlotPlanWidget(QWidget):
         self.plot_height = size.height() -20
 
     def drawDepth(self, qp):
+        
 
         # Fill plot bg area
         bgPath = QPainterPath()
@@ -381,9 +403,10 @@ class PlotPlanWidget(QWidget):
 
 ##############################################################################################
 class PlotTissuesWidget(QWidget):
-    def __init__(self, plan=None):
+    """ plot the tissue compartment pressures vs time """
+    def __init__(self, plan: DivePlan =None):
         super().__init__()
-        self.plan = plan
+        self.plan: DivePlan = plan
         self.initUI()
 
     # initialize the window
@@ -391,8 +414,8 @@ class PlotTissuesWidget(QWidget):
         self.qp = QPainter()
         self.show()
 
-    def setPlan(self, plan):
-        self.plan = plan
+    def setPlan(self, plan: DivePlan):
+        self.plan: DivePlan = plan
 
     # when any event occurs, like resize, we also redraw the plot
     def paintEvent(self, e):
@@ -525,17 +548,19 @@ class PlotTissuesWidget(QWidget):
         qp.drawPath(depthPath)
 
 class PlotPressureGraphWidget(QWidget):
-    def __init__(self, plan=None):
+    """ plot the tissue compartment pressures vs ambient pressure graph
+    """
+    def __init__(self, plan: DivePlan =None):
         super().__init__()
-        self.plan = plan
+        self.plan: DivePlan = plan
         self.initUI()
 
     def initUI(self):
         self.qp = QPainter()
         self.show()
 
-    def setPlan(self, plan):
-        self.plan = plan
+    def setPlan(self, plan: DivePlan):
+        self.plan: DivePlan = plan
 
     def paintEvent(self, e):
         self.qp.begin(self)
@@ -587,6 +612,14 @@ class PlotPressureGraphWidget(QWidget):
                 x1, y1 = x, y
 
     def drawMvalueLines(self, qp, plot ='Total', ghHigh = 1.0, gfLow = 1.0):
+        """ draw the M-value lines for each tissue compartment
+        args:
+            qp: QPainter    
+            plot: 'Total', 'Nitrogen', 'Helium'
+            ghHigh: GF high value   
+            gfLow: GF low value
+        """
+    
         scaler = 5.0
         offset = -1.0
         qp.drawText(5, 20, 'GF high = {}, GFlow = {}'.format(ghHigh, gfLow))

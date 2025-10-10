@@ -1,8 +1,11 @@
-#
-# (c) 2018 Ian Leiman, ian.leiman@gmail.com
-# pydplan_plot
+# pydplan_bars.py
+# (c) 2025 Ian Leiman, ian.leiman@gmail.com
 # part of PYDPLAN, a Python Dive Planner with PyQt5 GUI
 # bar plotting tools
+''' this module provides a QWidget to plot the tissue compartment saturation bars
+    for the currently selected model point in the dive plan
+    2025-10-10 fixed many qtplotting call args from float to int, py 3.14 no longer does that automatically
+'''
 
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
@@ -50,8 +53,8 @@ class PlotTCbarsWidget(QWidget):
 
     def drawSize(self, qp):
         size = self.size()
-        self.plot_width = size.width()
-        self.plot_height = size.height()
+        self.plot_width: int = int(size.width())
+        self.plot_height: int = int(size.height())
 
     def drawBars(self, qp, plot ='Total'):
         if not self.plan.model :
@@ -86,15 +89,15 @@ class PlotTCbarsWidget(QWidget):
             gfNowP = gfNow * deltaP + ambP
 
             ppTot = ppN2 + ppHe
-            barN2 = ppN2 * 50
-            barHe = ppHe * 50
+            barN2: int = int(ppN2 * 50)
+            barHe: int = int(ppHe * 50)
             saturation = ppTot / ambP
-            satPct = saturation * 100.0
+            satPct: float = float(saturation * 100.0)
 
             color = colors[tc]
             qp.setPen(QPen(color, 1, Qt.SolidLine))
-            x1 = 20+tc*30
-            qp.drawText(x1, 20, '{}'.format(tc))
+            x1: int = int( 20 + tc *30)
+            qp.drawText(x1, 20, f'{tc}')
             if gfNowP >= ppTot:
                 brushN2 = QBrush(QColor(0,255, 0, 127))
                 brushHe = QBrush(QColor(0, 0, 255, 127))
@@ -112,20 +115,20 @@ class PlotTCbarsWidget(QWidget):
                 qp.setPen(QPen(Qt.darkRed, 2, Qt.SolidLine))
             else:
                 qp.setPen(QPen(Qt.red, 5, Qt.SolidLine))
-            y = ambTolP * 50.0 + 20.0
+            y: int = int(ambTolP * 50.0 + 20.0)
             qp.drawLine(x1, y, x1+20, y)
-            #qp.drawText(x1, y+10, '{:.1f} m'.format(ambTolDepth))
-            qp.drawText(x1, y + 10, '{:.0f}%'.format(satPct))
+            #qp.drawText(x1, y+10, f'{ambTolDepth:.1f} m')
+            qp.drawText(x1, y + 10, f'{satPct:.0f}%')
 
             # draw gradient factor limits, low and high lines
-            yLow  = gfLowP * 50.0 +20.0
-            yHigh = gfHighP * 50.0 +20.0
+            yLow  = int(gfLowP * 50.0 +20.0)
+            yHigh = int(gfHighP * 50.0 +20.0)
             qp.setPen(QPen(Qt.darkGray, 1, Qt.SolidLine))
             qp.drawLine(x1, yLow, x1 + 10, yLow)
             qp.setPen(QPen(Qt.darkGreen, 1, Qt.SolidLine))
             qp.drawLine(x1, yHigh, x1 + 10, yHigh)
             # draw actually used GF, green if OK, red if violating it
-            yGF = gfNowP * 50.0 +20.0
+            yGF: int = int(gfNowP * 50.0 +20.0)
             if gfNowP >=  ppTot:
                 # safe situation
                 qp.setPen(QPen(Qt.green, 3, Qt.SolidLine))
@@ -134,7 +137,7 @@ class PlotTCbarsWidget(QWidget):
             qp.drawLine(x1+10, yGF, x1 + 20, yGF)
 
         # draw the current depth = ambient pressure line
-        y = ambP * 50.0 + 20.0
+        y = int(ambP * 50.0 + 20.0)
         qp.setPen(QPen(Qt.black, 2, Qt.SolidLine))
         qp.drawLine(0, y, self.plot_width, y)
-        qp.drawText(500, y-3, '{:.1f} bar {:.1f} m'.format(ambP, depth))
+        qp.drawText(500, y-3, f'{ambP:.1f} bar f{depth:.1f} m')
