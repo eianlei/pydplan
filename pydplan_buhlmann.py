@@ -1,9 +1,11 @@
-#!/usr/bin/python
-# (c) 2018 Ian Leiman, ian.leiman@gmail.com
-# pydplan_buhlmann
-# PYDPLAN module for Bühlmann 16 compartment tissue model, a Python Dive Planner with PyQt5 GUI
-# inspiration taken from from dipplanner and decotengu
-#
+"""pydplan_buhlmann.py
+(c) 2025 Ian Leiman, ian.leiman@gmail.com
+ 
+ PYDPLAN module for Bühlmann 16 compartment tissue model, a Python Dive Planner with PyQt5 GUI
+ inspiration taken from from dipplanner and decotengu
+
+ this module provides the Buhlmann model coefficients and calculation functions
+"""
 import math
 import copy
 

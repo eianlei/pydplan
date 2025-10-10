@@ -11,6 +11,7 @@ To install and run the application there are following prerequisites:
 - install Python version 3.6 or newer to your system
 - recommend Python 3.14 though
 - install PyQt5 package (for the GUI)
+- scipy required for FillCalc2.py
 - clone the source files from github
   - if you do not have git, then it stronly recommended to get git before this step, 
   - see: [Simple Git guide](http://rogerdudler.github.io/git-guide/)
@@ -28,9 +29,10 @@ Install latest Python:
 
 [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
 
-Install pyqt5 from Command Prompt
+Install pyqt5 and scipy from Command Prompt
 ```
 python -m pip install pyqt5
+python -m pip install scipy
 ```
 
 ## Python &amp; PyQt5 for Linux
@@ -45,6 +47,7 @@ PytQt5 is an extra package, so you need to install pyqt5 separately using pip. H
 ```
 # if you are root or sudoer and really want to do this
 sudo pip3 install PyQt5
+sudo pip3 install scipy
 ```
 Use venv instead
 ```
@@ -55,6 +58,7 @@ python3 -m venv venv
 # This creates a folder named venv containing the virtual environment.
 source venv/bin/activate
 pip3 install PyQt5
+pip3 install scipy
 # deactivate venv when done
 deactivate
 ```

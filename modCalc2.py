@@ -1,14 +1,15 @@
-#!/usr/bin/python
-# (c) 2018 Ian Leiman, ian.leiman@gmail.com
-# mod_gui_sb_sliders.py
-# github project https://github.com/eianlei/trimix-fill/
-#  this GUI uses function mod_calc() from tmx_calc.py
-# use at your own risk, no guarantees, no liability!
-#
-# GUI to calculate MOD using pyqt5 and spinboxes and sliders
-#  almost same UI design as mod_gui_sb.py which is done with tkinter, this is with pyqt5
-#  changed control widgets to spinboxes plus added sliders
+""" modCalc2.py
+MOD calculator GUI using pyqt5 with spinboxes and sliders
+(c) 2025 Ian Leiman, ian.leiman@gmail.com
+ 
+github project https://github.com/eianlei/trimix-fill/
+ this GUI uses function mod_calc() from tmx_calc.py
+use at your own risk, no guarantees, no liability!
 
+GUI to calculate MOD using pyqt5 and spinboxes and sliders
+ almost same UI design as mod_gui_sb.py which is done with tkinter, this is with pyqt5
+ changed control widgets to spinboxes plus added sliders
+"""
 gui_version = "0.1"
 
 from PyQt5.QtCore import pyqtSignal, Qt
@@ -127,7 +128,7 @@ class mod_gui_win(QWidget):
         o2pct = self.o2pctSpinBox.value()
         self.o2pctSlider.setValue(o2pct)
         ppo2 = self.ppo2SpinBox.value()
-        self.ppo2Slider.setValue(ppo2*10)
+        self.ppo2Slider.setValue(int(ppo2*10))
         mod_m = mod_calc(ppo2, o2pct)
         self.modout.setText("{:.1f}".format(mod_m))
         #print("calc_cmd o2pct= {} ppo2= {} => mod= {}".format(o2pct, ppo2, mod_m))

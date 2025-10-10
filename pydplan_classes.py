@@ -1,3 +1,7 @@
+"""pydplan_classes.py
+(c) 2025 Ian Leiman, ian.leiman@gmail.com
+classes for dive plan, tanks, deco stops
+"""
 from PyQt5.QtCore import Qt
 from pydplan_buhlmann import Buhlmann
 
@@ -10,12 +14,14 @@ class PlanMode(Enum):
     Import = 2
 
 class TankType(Enum):
+    """ tank types """
     BOTTOM = auto()
     DECO1 = auto()
     DECO2 = auto()
     TRAVEL = auto()
 
 class DivePlan():
+    """ holds the dive plan data, profile segments, tanks, model points, etc """
     def __init__(self):
         self.GFhigh = 1.0
         self.GFlow = 1.0
@@ -58,6 +64,7 @@ class DivePlan():
         self.maxTChelium = 0.0
 
     def setDefaults(self):
+        """ set default values for a new plan """
         self.GFhigh = 0.80
         self.GFlow = 0.30
         self.modelConstants = Buhlmann()
@@ -118,6 +125,7 @@ class DivePlan():
         }
 
 class DecoStop():
+    """ a planned deco stop """
     def __init__(self, depth, time, number):
         self.depth = depth
         self.time = time
@@ -126,6 +134,7 @@ class DecoStop():
         self.runtime = 0.0
 
 class ScubaTank():
+    """ a scuba tank with gas mix and properties """
     def __init__(self, label, name, use,  o2, he,
                  liters, bar, pressure, SAC, ppo2max,
                  useFromTime, useUntilTime,
@@ -171,17 +180,18 @@ class ScubaTank():
         self.ppo2max = new
 
 def currentTank(tanks, depth, type):
-        if type == 'bottom' :
-            for tank in tanks.keys():
-                if type == tanks[tank].type :
-                    return tanks[tank]
-        if type == 'deco':
-            for tank in tanks.keys() :
-                if type == tanks[tank].type and \
-                    depth <= tanks[tank].useFromDepth and \
-                    depth >= tanks[tank].useUntilDepth and \
-                        tanks[tank].use == True  :
-                    return tanks[tank]
+    """ return the current tank for the given depth and type """
+    if type == 'bottom' :
+        for tank in tanks.keys():
+            if type == tanks[tank].type :
+                return tanks[tank]
+    if type == 'deco':
+        for tank in tanks.keys() :
+            if type == tanks[tank].type and \
+                depth <= tanks[tank].useFromDepth and \
+                depth >= tanks[tank].useUntilDepth and \
+                    tanks[tank].use == True  :
+                return tanks[tank]
 
-        return None
+    return None
 

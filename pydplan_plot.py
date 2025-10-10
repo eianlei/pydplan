@@ -26,7 +26,7 @@ colors = [Qt.black, Qt.gray, Qt.lightGray, Qt.darkGray,
 class PlotBelowWidget(QWidget):
     """ plot the partial pressures of O2, He, N2 vs time
     """
-    def __init__(self, plan: DivePlan = None):
+    def __init__(self, plan: DivePlan):
         super().__init__()
         self.plan: DivePlan  = plan
         self.maxPressure = 3.0
@@ -120,7 +120,7 @@ class PlotBelowWidget(QWidget):
 ##################################################################################
 class PlotPlanWidget(QWidget):
     """ plot the depth profile, ceiling, tanks, tank pressure vs time """
-    def __init__(self, plan: DivePlan =None):
+    def __init__(self, plan: DivePlan ):
         super().__init__()
         self.plan: DivePlan = plan
         self.profileSampled = None
@@ -404,7 +404,7 @@ class PlotPlanWidget(QWidget):
 ##############################################################################################
 class PlotTissuesWidget(QWidget):
     """ plot the tissue compartment pressures vs time """
-    def __init__(self, plan: DivePlan =None):
+    def __init__(self, plan: DivePlan  ):
         super().__init__()
         self.plan: DivePlan = plan
         self.initUI()
@@ -550,7 +550,7 @@ class PlotTissuesWidget(QWidget):
 class PlotPressureGraphWidget(QWidget):
     """ plot the tissue compartment pressures vs ambient pressure graph
     """
-    def __init__(self, plan: DivePlan =None):
+    def __init__(self, plan: DivePlan ):
         super().__init__()
         self.plan: DivePlan = plan
         self.initUI()

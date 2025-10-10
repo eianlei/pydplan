@@ -13,11 +13,13 @@ from PyQt5.QtGui import QPainter, QPainterPath, QLinearGradient, QBrush, QPalett
 from PyQt5.QtWidgets import *
 from pydplan_buhlmann import *
 from pydplan_plot import colors
+from pydplan_classes import DivePlan
 
 class TCbarsController(QWidget):
-    def __init__(self, plan=None):
+    """ controller widget with a slider to select the model point and a bar plot """
+    def __init__(self, plan: DivePlan):
         super().__init__()
-        self.plan = plan
+        self.plan: DivePlan = plan
 
         mainW = QWidget()
         layout = QVBoxLayout()
@@ -28,22 +30,23 @@ class TCbarsController(QWidget):
         mainW.setLayout(layout)
         self.show()
 
-    def setPlan(self, plan):
-        self.plan = plan
+    def setPlan(self, plan: DivePlan):
+        self.plan: DivePlan = plan
 
 
 class PlotTCbarsWidget(QWidget):
-    def __init__(self, plan=None):
+    """ plot the tissue compartment saturation bars """
+    def __init__(self, plan: DivePlan):
         super().__init__()
-        self.plan = plan
+        self.plan: DivePlan = plan
         self.initUI()
 
     def initUI(self):
         self.qp = QPainter()
         self.show()
 
-    def setPlan(self, plan):
-        self.plan = plan
+    def setPlan(self, plan: DivePlan):
+        self.plan: DivePlan = plan
 
     def paintEvent(self, e):
         self.qp.begin(self)

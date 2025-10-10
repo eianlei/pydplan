@@ -22,7 +22,7 @@ from pydplan_heat import PlotHeatMapWidget
 from pydplan_profiletools import calculatePlan
 from pydplan_classes import PlanMode
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QObject
 from PyQt5.QtGui import  QPalette, QFont, QColor
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QWidget, QHBoxLayout, QSlider, QAction, QLabel, 
                              QPushButton, QMessageBox, QColorDialog, QCheckBox, QComboBox, QDoubleSpinBox,
@@ -609,7 +609,7 @@ class pydplan_main(QMainWindow):
 
     def PGplotChanged(self):
         global globalDivePlan
-        sender = self.sender()
+        sender: QObject = self.sender()
         newValue = sender.currentText()
         globalDivePlan.PGplot = newValue
         self.pg.update()
