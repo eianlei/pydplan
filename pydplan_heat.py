@@ -7,8 +7,8 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QPainterPath, QLinearGradient, QBrush, QPalette, QPen, QColor
-from PyQt5.QtWidgets import *
-from pydplan_buhlmann import *
+from PyQt5.QtWidgets import QWidget
+from pydplan_buhlmann import ModelPoint
 from pydplan_plot import colors
 
 class PlotHeatMapWidget(QWidget):

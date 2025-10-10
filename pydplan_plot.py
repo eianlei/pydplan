@@ -52,48 +52,48 @@ class PlotBelowWidget(QWidget):
         for point in  profile:
             x = (point.time / self.totalTime) * self.plot_width
             y = (1 - point.ppOxygen / self.maxPressure) * self.plot_height
-            qp.drawLine(x1, y1, x, y)
+            qp.drawLine(int(x1), int(y1), int(x), int(y))
             x1, y1 = x, y
-        qp.drawText(x - 20, y, 'ppO2')
+        qp.drawText(int(x - 20), int(y), 'ppO2')
         # draw the ppHe
         x1, y1 = (0, self.plot_height )
         qp.setPen(QPen(Qt.blue, 1, Qt.SolidLine))
         for point in  profile:
             x = (point.time / self.totalTime) * self.plot_width
             y = (1 - point.ppHelium / self.maxPressure) * self.plot_height
-            qp.drawLine(x1, y1, x, y)
+            qp.drawLine(int(x1), int(y1), int(x), int(y))
             x1, y1 = x, y
-        qp.drawText(x - 20, y, 'ppHe')
+        qp.drawText(int(x - 20), int(y), 'ppHe')
         # draw the ppN2
         x1, y1 = (0, self.plot_height )
         qp.setPen(QPen(Qt.darkYellow, 1, Qt.SolidLine))
         for point in  profile:
             x = (point.time / self.totalTime) * self.plot_width
             y = (1 - point.ppNitrogen / self.maxPressure) * self.plot_height
-            qp.drawLine(x1, y1, x, y)
+            qp.drawLine(int(x1), int(y1), int(x), int(y))
             x1, y1 = x, y
-        qp.drawText(x - 20, y-10, 'ppN2')
+        qp.drawText(int(x - 20), int(y-10), 'ppN2')
 
         # draw ppo2=1.6 limit (common deco gas limit, bottom gas limit usually 1.4
         y = (1.0 - 1.60 / self.maxPressure) * self.plot_height
         qp.setPen(QPen(Qt.darkGreen, 1, Qt.DashLine))
-        qp.drawLine(0, y, self.plot_width, y)
-        qp.drawText(self.plot_width/2, y + 10, 'ppO2=1.6 limit')
+        qp.drawLine(0, int(y), int(self.plot_width), int(y))
+        qp.drawText(int(self.plot_width/2), int(y + 10), 'ppO2=1.6 limit')
 
         # draw ppN2 = 3.16, END=30m, the GUE limit, note DAN limit is 3.95
         y = (1.0 - 3.16 / self.maxPressure) * self.plot_height
         qp.setPen(QPen(Qt.darkYellow, 1, Qt.DashLine))
-        qp.drawLine(0, y, self.plot_width, y)
-        qp.drawText(self.plot_width/2, y + 10, 'ppN2=3.16 limit (END=30m)')
+        qp.drawLine(0, int(y), int(self.plot_width), int(y))
+        qp.drawText(int(self.plot_width/2), int(y + 10), 'ppN2=3.16 limit (END=30m)')
 
     def drawPressureGrid(self, qp):
         qp.setPen(QPen(Qt.gray, 1, Qt.DotLine))
         # pressure lines at maxPressure/6 bar intervals
         for gline in range(7) :
             y = (1 - (gline/6.0 )) * self.plot_height
-            qp.drawLine(0, y, self.plot_width, y)
+            qp.drawLine(0, int(y), int(self.plot_width), int(y))
             ltext = '{:.1f} bar'.format(gline * self.maxPressure/6.0)
-            qp.drawText(self.plot_width + 5, y + 10, ltext)
+            qp.drawText(int(self.plot_width + 5), int(y + 10), ltext)
         # ticks at 1 meter intervals
         #for dd in range(0, int(self.depthMax), 1):
         #    y = int((dd / self.depthMax) * self.plot_height)
@@ -198,7 +198,7 @@ class PlotPlanWidget(QWidget):
             x = (point.time / self.totalTime) * self.plot_width
             self.ceilingPlotX[n] = x
             y = point.modelpoint.leadCeilingStop / self.depthMax * self.plot_height
-            qp.drawLine(x1, y1, x, y)
+            qp.drawLine(int(x1), int(y1), int(x), int(y))
             x1, y1 = x, y
             #at the same go we compute the ceiling plots (x,y) for individual tissue compartments
             for tc in range(ModelPoint.COMPS):
@@ -211,12 +211,13 @@ class PlotPlanWidget(QWidget):
                 self.ceilingPlotY[tc][n] = yCeiling
 
         # draw the running average depth
-        x1, y1 = (0, 0)
+        x1: int = 0 
+        y1: int = 0
         qp.setPen(QPen(Qt.lightGray, 1, Qt.SolidLine))
         for point in  profileSampled:
-            x = (point.time / self.totalTime) * self.plot_width
-            y = point.depthRunAvg / self.depthMax * self.plot_height
-            qp.drawLine(x1, y1, x, y)
+            x = int( (point.time / self.totalTime) * self.plot_width )
+            y = int( point.depthRunAvg / self.depthMax * self.plot_height )
+            qp.drawLine(int(x1), int(y1), int(x), int(y))
             x1, y1 = x, y
         qp.drawText(x + 10, y, 'AVG')
 
@@ -229,7 +230,7 @@ class PlotPlanWidget(QWidget):
             for n in range(len(self.ceilingPlotX)):
                 x = self.ceilingPlotX[n]
                 y = self.ceilingPlotY[tc][n]
-                qp.drawLine(x1, y1, x, y)
+                qp.drawLine(int(x1), int(y1), int(x), int(y))
                 x1 = x
                 y1 = y
 
@@ -256,15 +257,15 @@ class PlotPlanWidget(QWidget):
             y = zeroLevel - (margin / self.depthMax * self.plot_height * 0.5)
 
             if point.time >= self.plan.ascentBegins:
-                qp.drawLine(x1, y1, x, y)
+                qp.drawLine(int(x1), int(y1), int(x), int(y))
             else:
                 x2 = x
             x1, y1 = x, y
         qp.setPen(QPen(Qt.black, 1, Qt.DashLine))
-        qp.drawLine(x2, zeroLevel, self.plot_width, zeroLevel)
+        qp.drawLine(int(x2), int(zeroLevel), int(self.plot_width), int(zeroLevel))
         if mError:
             qp.setPen(QPen(Qt.red, 1, Qt.DashLine))
-        qp.drawText(x2+20, zeroLevel-1, 'ceiling margin {}'.format(status))
+        qp.drawText(int(x2+20), int(zeroLevel-1), f'ceiling margin {status}' )
 
     # redraw the TC curves plot
     def drawTC(self, qp):
@@ -273,8 +274,8 @@ class PlotPlanWidget(QWidget):
             return
 
         size = self.size()
-        plot_width = size.width() -50
-        plot_height = size.height() -20
+        plot_width = int(size.width() -50)
+        plot_height = int(size.height() -20)
         samples = len(self.TC[0])
         maxPressure = max(self.maxTC) # biggest value we will plot
         step = plot_width / samples
@@ -288,7 +289,7 @@ class PlotPlanWidget(QWidget):
             for index in range(samples):
                 x = index * step
                 y = (self.TC[tc][index] / maxPressure) * plot_height
-                qp.drawLine(x1, y1, x, y)
+                qp.drawLine(int(x1), int(y1), int(x), int(y))
                 x1 = x
                 y1 = y
 
@@ -328,9 +329,9 @@ class PlotPlanWidget(QWidget):
             tank = self.plan.tankList[tankKey]
             if tank.use == False:
                 continue
-            x1 = tank.useFromTime / self.totalTime *self.plot_width
-            x2 = tank.useUntilTime / self.totalTime *self.plot_width
-            yTxt = tank.changeDepth / self.depthMax * self.plot_height
+            x1 = int(tank.useFromTime / self.totalTime *self.plot_width)
+            x2 = int(tank.useUntilTime / self.totalTime *self.plot_width)
+            yTxt = int(tank.changeDepth / self.depthMax * self.plot_height)
             bgPath = QPainterPath()
             bgPath.moveTo(x1, self.plot_height+10)
             bgPath.lineTo(x1, self.plot_height+20)
@@ -358,25 +359,25 @@ class PlotPlanWidget(QWidget):
         # draw the tank pressure
         previousTank = None
         lastPressure = None
-        x1 = 0
-        y1 = (1.0 - self.plan.profileSampled[0].currentTankPressure / 300.0) * self.plot_height
+        x1: int = 0
+        y1: int = int((1.0 - self.plan.profileSampled[0].currentTankPressure / 300.0) * self.plot_height)
 
         for point in  self.plan.profileSampled:
             thisTank = point.tank
-            x = (point.time / self.totalTime) * self.plot_width
-            y = (1.0 - point.currentTankPressure / 300.0) * self.plot_height
+            x = int((point.time / self.totalTime) * self.plot_width)
+            y = int((1.0 - point.currentTankPressure / 300.0) * self.plot_height)
             if thisTank != previousTank:
                 if lastPressure :
-                    qp.drawText(x -5,y1, '{:.0f}'.format(lastPressure))
+                    qp.drawText(x -5,y1, f'{lastPressure:.0f}')
                 qp.setPen(QPen(thisTank.color, 2, Qt.SolidLine))
-                qp.drawText(x + 2, y, '{:.0f}'.format(point.currentTankPressure))
+                qp.drawText(x + 2, y, f'{point.currentTankPressure:.0f}')
                 y1 = y
 
             qp.drawLine(x1, y1, x, y)
             x1, y1 = x, y
             previousTank = thisTank
             lastPressure = point.currentTankPressure
-        qp.drawText(x + 10, y, '{:.0f}'.format(lastPressure))
+        qp.drawText(x + 10, y, '{lastPressure:.0f}')
 
 ##############################################################################################
 class PlotTissuesWidget(QWidget):
@@ -403,8 +404,8 @@ class PlotTissuesWidget(QWidget):
 
     def drawSize(self, qp):
         size = self.size()
-        self.plot_width = size.width() -50
-        self.plot_height = size.height() -20
+        self.plot_width = int(size.width() -50)
+        self.plot_height = int(size.height() -20)
 
     def drawTC(self, qp):
         if not self.plan.model :
@@ -418,12 +419,13 @@ class PlotTissuesWidget(QWidget):
             #color = QColor(tc*15, 15+(tc*15), 255-tc*15)
             qp.setPen(QPen(color, 1, Qt.SolidLine))
 
-            x1, y1 = (0, 0)
+            x1: int = 0 
+            y1: int = 0
             for n, point in enumerate( self.plan.profileSampled):
-                x = (point.time / self.totalTime) * self.plot_width
+                x = int((point.time / self.totalTime) * self.plot_width)
                 #x = (n / len(self.plan.model)) * self.plot_width
                 pressure = point.modelpoint.tissues[tc].nitrogenPressure
-                y =  zeroLevel - ( (pressure / maxN2press) * (self.plot_height /2.0))
+                y =  int(zeroLevel - ( (pressure / maxN2press) * (self.plot_height /2.0)))
                 qp.drawLine(x1, y1, x, y)
                 x1 = x
                 y1 = y
@@ -434,23 +436,23 @@ class PlotTissuesWidget(QWidget):
         # draw gridlines
         pLine= 0.0
         while pLine < maxN2press:
-            lineLevel = zeroLevel - (self.plot_height/2.0 * (pLine / maxN2press))
-            qp.drawLine(0, lineLevel, self.plot_width, lineLevel)
-            qp.drawText(self.plot_width + 5, lineLevel, '{:.1f}'.format(pLine))
+            lineLevel = int(zeroLevel - (self.plot_height/2.0 * (pLine / maxN2press)))
+            qp.drawLine(0, lineLevel, int(self.plot_width), lineLevel)
+            qp.drawText(int(self.plot_width) + 5, lineLevel, '{pLine:.1f}')
             pLine += 0.5
         # draw ticks
         qp.setPen(QPen(Qt.darkGray, 1, Qt.SolidLine))
         dd = 0.0
         while dd < maxN2press:
-            y = zeroLevel - (self.plot_height/2.0 * (dd / maxN2press))
-            qp.drawLine(self.plot_width - 5, y, self.plot_width + 4, y)
+            y = int(zeroLevel - (self.plot_height/2.0 * (dd / maxN2press)))
+            qp.drawLine(int(self.plot_width - 5), int(y), int(self.plot_width + 4), int(y))
             dd += 0.1
 
         # Helium TC's next
         heScale = 2.2
         maxHEpress = self.plan.maxTChelium
         if maxHEpress == 0:
-            qp.drawText(10, self.plot_height, 'NO HELIUM USED')
+            qp.drawText(10, int(self.plot_height), 'NO HELIUM USED')
             return # there is no helium
         zeroLevel = self.plot_height
         for tc in range(ModelPoint.COMPS):
@@ -459,31 +461,31 @@ class PlotTissuesWidget(QWidget):
             qp.setPen(QPen(color, 1, Qt.SolidLine))
             x1, y1 = (0, 0)
             for n, point in enumerate(self.plan.profileSampled):
-                x = (point.time / self.totalTime) * self.plot_width
+                x = int((point.time / self.totalTime) * self.plot_width)
                 #x = (n / len(self.plan.model)) * self.plot_width
                 pressure = point.modelpoint.tissues[tc].heliumPressure
                 y =  zeroLevel - ( (pressure / maxHEpress) * (self.plot_height/heScale))
-                qp.drawLine(x1, y1, x, y)
+                qp.drawLine(int(x1), int(y1), int(x), int(y))
                 x1 = x
                 y1 = y
 
         qp.setPen(QPen(Qt.darkGreen, 1, Qt.DashLine))
-        qp.drawLine(0, zeroLevel, self.plot_width, zeroLevel)
-        qp.drawText(0, zeroLevel+10, 'Helium tissue compartment pressures')
+        qp.drawLine(int(0), int(zeroLevel), int(self.plot_width), int(zeroLevel))
+        qp.drawText(0, int(zeroLevel+10), 'Helium tissue compartment pressures')
 
         # draw gridlines
         pLine= 0.0
         while pLine < maxHEpress:
-            lineLevel = zeroLevel - (self.plot_height/heScale * (pLine / maxHEpress))
-            qp.drawLine(0, lineLevel, self.plot_width, lineLevel)
-            qp.drawText(self.plot_width + 10, lineLevel, '{:.1f}'.format(pLine))
+            lineLevel = int(zeroLevel - (self.plot_height/heScale * (pLine / maxHEpress)))
+            qp.drawLine(int(0), int(lineLevel), int(self.plot_width), int(lineLevel))
+            qp.drawText(int(self.plot_width + 10), int(lineLevel), '{pLine:.1f}')
             pLine += 0.5
         # draw ticks
         qp.setPen(QPen(Qt.darkGreen, 1, Qt.SolidLine))
         dd = 0.0
         while dd < maxHEpress:
-            y = zeroLevel - (self.plot_height/heScale * (dd / maxHEpress))
-            qp.drawLine(self.plot_width +5, y, self.plot_width + 9, y)
+            y = int(zeroLevel - (self.plot_height/heScale * (dd / maxHEpress)))
+            qp.drawLine(int(self.plot_width +5), int(y), int(self.plot_width + 9), int(y))
             dd += 0.1
 
 
@@ -561,11 +563,12 @@ class PlotPressureGraphWidget(QWidget):
             color = colors[tc]
             qp.setPen(QPen(color, 2, Qt.SolidLine))
             qp.drawText(5, 40 + tc * 10, 'TC {}'.format(tc))
-            x1, y1 = (0, self.plot_height)
+            x1: int = 0 
+            y1: int = self.plot_height
 
             for n, mPoint in enumerate( self.plan.model ):
                 #x =  (((mPoint.ambient + offset) / scaler) * self.plot_width)
-                x = scaleToX(mPoint.ambient, scaler, offset, self.plot_width)
+                x = int(scaleToX(mPoint.ambient, scaler, offset, self.plot_width))
                 if plot=='Total':
                     qp.drawText(5, 10 , 'Nitrogen + Helium Pressure plot')
                     TCpressure = mPoint.tissues[tc].nitrogenPressure \
@@ -579,7 +582,7 @@ class PlotPressureGraphWidget(QWidget):
                 else:
                     break
                 #y =   self.plot_height - (((TCpressure +offset) / scaler) * self.plot_height)
-                y = scaleToY(TCpressure, scaler, offset, self.plot_height)
+                y = int(scaleToY(TCpressure, scaler, offset, self.plot_height))
                 qp.drawLine(x1, y1, x, y)
                 x1, y1 = x, y
 
@@ -599,9 +602,9 @@ class PlotPressureGraphWidget(QWidget):
                 a = self.plan.modelUsed[tc].HeliumA
                 b = self.plan.modelUsed[tc].HeliumB
             x1 = 0
-            y1 = scaleToY( 1.0/b +a , scaler, offset, self.plot_height)
-            x2 = scaleToX( (6.0-a) *b, scaler, offset, self.plot_width)
-            y2 = scaleToY( 6.0 , scaler, offset, self.plot_height)
+            y1 = int(scaleToY( 1.0/b +a , scaler, offset, self.plot_height))
+            x2 = int(scaleToX( (6.0-a) *b, scaler, offset, self.plot_width))
+            y2 = int(scaleToY( 6.0 , scaler, offset, self.plot_height))
             qp.drawLine(  x2, y2, x1, y1)
 
 
@@ -617,12 +620,13 @@ class PlotPressureGraphWidget(QWidget):
         for tc in range(ModelPoint.COMPS):
             color = colors[tc]
             qp.setPen(QPen(color, 1, Qt.DotLine))
-            x1, y1 = (0, self.plot_height)
+            x1: int = 0 
+            y1: int = self.plot_height
 
             for n, mPoint in enumerate( self.plan.model ):
-                x =  (((mPoint.ambient -0.5) / scaler) * self.plot_width)
+                x =  int((((mPoint.ambient -0.5) / scaler) * self.plot_width))
                 mValue = mPoint.tissues[tc].mv
-                y =   self.plot_height - (((mValue-0.5) / scaler) * self.plot_height)
+                y =  int( self.plot_height - (((mValue-0.5) / scaler) * self.plot_height) )
                 qp.drawLine(x1, y1, x, y)
                 x1 = x
                 y1 = y
@@ -630,5 +634,5 @@ class PlotPressureGraphWidget(QWidget):
 def scaleToX(input, scaler, offset, plot_width):
     return ((input + offset) / scaler) * plot_width
 
-def scaleToY(input, scaler, offset, plot_height):
-    return plot_height - (((input +offset) / scaler) * plot_height)
+def scaleToY(input, scaler, offset, plot_height)-> int:
+    return int(plot_height - (((input +offset) / scaler) * plot_height))

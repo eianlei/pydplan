@@ -1,22 +1,30 @@
-#!/usr/bin/python
-# (c) 2018 Ian Leiman, ian.leiman@gmail.com
-# pydplan_main
+# pydplan_main.py
+""" 
+""" 
+# 2025-10-10 refresh update to run on Python 3.14 and PyQt5 latest version
+# (c) 2025 Ian Leiman, ian.leiman@gmail.com
+#   
 # main module for PYDPLAN, a Python Dive Planner with PyQt5 GUI
+# py -m pip install PyQt5
+# py -m pip install PyQt5-stubs
 
 
 # import modules, like PyQt5 stuff
 from pydplan_classes import DivePlan, DecoStop
 from pydplan_plot import PlotPlanWidget, PlotBelowWidget, PlotPressureGraphWidget, \
     PlotTissuesWidget
-from pydplan_table import *
-from pydplan_bars import *
-from pydplan_heat import *
+from pydplan_table import   tableUpdate, tableUpdate2, tableUpdate3
+from pydplan_bars import PlotTCbarsWidget
+from pydplan_heat import PlotHeatMapWidget
 from pydplan_profiletools import calculatePlan
 from pydplan_classes import PlanMode
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import  QPalette
-from PyQt5.QtWidgets import *
+from PyQt5.QtGui import  QPalette, QFont, QColor
+from PyQt5.QtWidgets import (QMainWindow, QApplication, QWidget, QHBoxLayout, QSlider, QAction, QLabel, 
+                             QPushButton, QMessageBox, QColorDialog, QCheckBox, QComboBox, QDoubleSpinBox,
+                             QGridLayout, QTabWidget, QVBoxLayout, QSplitter, QSpinBox, QTableWidget,
+                             QFrame)      
 
 globalDivePlan =  None
 
@@ -430,7 +438,7 @@ class pydplan_main(QMainWindow):
                 key = 'change'
                 controls[key] = QSpinBox()
                 controls[key].setRange(1, 100)
-                controls[key].setValue(thisGas.changeDepth)
+                controls[key].setValue(int(thisGas.changeDepth))
                 self.divePlan.objectOfWidget[controls[key]] = thisGas.setChangeDepth
                 controls[key].valueChanged.connect(self.tankConfigChange)
                 lay.addWidget(controls[key], 7, col )
@@ -438,7 +446,7 @@ class pydplan_main(QMainWindow):
             key = 'liters'
             controls[key] = QSpinBox()
             controls[key].setRange(1, 50)
-            controls[key].setValue(thisGas.liters)
+            controls[key].setValue(int(thisGas.liters))
             self.divePlan.objectOfWidget[controls[key]] = thisGas.setLiters
             controls[key].valueChanged.connect(self.tankConfigChange)
             lay.addWidget(controls[key],  8, col )
@@ -446,7 +454,7 @@ class pydplan_main(QMainWindow):
             key = 'bar'
             controls[key] = QSpinBox()
             controls[key].setRange(1, 300)
-            controls[key].setValue(thisGas.bar)
+            controls[key].setValue(int(thisGas.bar))
             self.divePlan.objectOfWidget[controls[key]] = thisGas.setBar
             controls[key].valueChanged.connect(self.tankConfigChange)
             lay.addWidget(controls[key], 9, col )
@@ -507,7 +515,7 @@ class pydplan_main(QMainWindow):
         lay = QGridLayout()
         thisWidget.setLayout(lay)
         calcDecoLabel = QLabel('deco stops:')
-        calcDecoLabel.setFont(QtGui.QFont("Courier",8))
+        calcDecoLabel.setFont(QFont("Courier",8))
         lay.addWidget(calcDecoLabel)
         lay.setAlignment(Qt.AlignTop)
 
